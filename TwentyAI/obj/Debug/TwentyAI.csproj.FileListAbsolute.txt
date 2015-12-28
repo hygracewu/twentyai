@@ -1,0 +1,9 @@
+c:\users\user\documents\visual studio 2015\Projects\TwentyAI\TwentyAI\bin\Debug\TwentyAI.exe.config
+c:\users\user\documents\visual studio 2015\Projects\TwentyAI\TwentyAI\obj\Debug\TwentyAI.csprojResolveAssemblyReference.cache
+c:\users\user\documents\visual studio 2015\Projects\TwentyAI\TwentyAI\obj\Debug\TwentyAI.Form1.resources
+c:\users\user\documents\visual studio 2015\Projects\TwentyAI\TwentyAI\obj\Debug\TwentyAI.Properties.Resources.resources
+c:\users\user\documents\visual studio 2015\Projects\TwentyAI\TwentyAI\obj\Debug\TwentyAI.csproj.GenerateResource.Cache
+c:\users\user\documents\visual studio 2015\Projects\TwentyAI\TwentyAI\bin\Debug\TwentyAI.exe
+c:\users\user\documents\visual studio 2015\Projects\TwentyAI\TwentyAI\bin\Debug\TwentyAI.pdb
+c:\users\user\documents\visual studio 2015\Projects\TwentyAI\TwentyAI\obj\Debug\TwentyAI.exe
+c:\users\user\documents\visual studio 2015\Projects\TwentyAI\TwentyAI\obj\Debug\TwentyAI.pdb
