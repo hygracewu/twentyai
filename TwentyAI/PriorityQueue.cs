@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//not finished 
+//the data structure should be modified to max heap
 namespace TwentyAI
 {
     public class PriorityQueue<T>

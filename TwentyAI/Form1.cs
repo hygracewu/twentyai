@@ -25,7 +25,8 @@ namespace TwentyAI
         {
             getCurrent();
             currentOutput();
-            moveBlock();
+            testMovable();
+            //moveBlock();
             //getCursorPosColor();
         }
 

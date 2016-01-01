@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace TwentyAI
@@ -10,7 +10,7 @@ namespace TwentyAI
     public partial class Form1 : Form
     {
         static bool[,] isBlank = new bool[7, 8];
-        static List<Point> reachlist;
+        List<Point> reachlist = new List<Point>();
         private bool movable(Point start, Point dest, ref List<Point> route)
         {
             if (Current[start.X, start.Y].getNumber() == 0)
@@ -26,16 +26,28 @@ namespace TwentyAI
                         isBlank[i, j] = false;
                 }
             }
-            isBlank[dest.X, dest.Y] = true;
+            //isBlank[dest.X, dest.Y] = true;
+
+            /*for (int j = 7; j >= 0; j--)
+            {
+                for (int i = 0; i < 7; i++)
+                {
+                    Debug.WriteIf(isBlank[i, j], "T" + " ");
+                    Debug.WriteIf(!isBlank[i, j], "F" + " ");
+                }
+                Debug.Write("\n");
+            }*/
 
             Queue frontier = new Queue();
             frontier.Enqueue(start);
+            List<Point> explored = new List<Point>();
             List<Point> actionList = new List<Point>();
             Dictionary<Point, List<Point>> transitionTable = new Dictionary<Point, List<Point>>();
             Point leafNode = new Point();
             while (frontier.Count != 0)
             {
                 leafNode = (Point)frontier.Dequeue();
+                //Debug.Write(leafNode);
 
                 if (transitionTable.ContainsKey(leafNode))
                 {
@@ -48,29 +60,30 @@ namespace TwentyAI
                     route.Add(dest);
                     return true;
                 }
+                explored.Add(leafNode);
 
                 isBlank[leafNode.X, leafNode.Y] = false;
                 List<Point> leaves = new List<Point>();
                 reachlist.Clear();
-                if (leafNode.X > 0 && reachable(leafNode, start, 2) == true)//left
+                if (leafNode.X > 0 && reachable(leafNode, start, dest, 2) == true)//left
                     leaves.Add(new Point(leafNode.X - 1, leafNode.Y));
                 reachlist.Clear();
-                if (leafNode.Y > 0 && reachable(leafNode, start, 1) == true)//down
+                if (leafNode.Y > 0 && reachable(leafNode, start, dest, 1) == true)//down
                     leaves.Add(new Point(leafNode.X, leafNode.Y - 1));
                 reachlist.Clear();
-                if (leafNode.X < 6 && reachable(leafNode, start, 3) == true)//right
+                if (leafNode.X < 6 && reachable(leafNode, start, dest, 3) == true)//right
                     leaves.Add(new Point(leafNode.X + 1, leafNode.Y));
                 reachlist.Clear();
-                if (leafNode.Y < 7 && reachable(leafNode, start, 0) == true)//up
+                if (leafNode.Y < 7 && reachable(leafNode, start, dest, 0) == true)//up
                     leaves.Add(new Point(leafNode.X, leafNode.Y + 1));
 
                 List<Point> newActionList = new List<Point>();
                 newActionList = actionList;
                 newActionList.Add(leafNode);
-
+                
                 while (leaves.Count != 0)
                 {
-                    if (frontier.Contains(leaves[0]) == false)
+                    if (frontier.Contains(leaves[0]) == false && explored.Contains(leaves[0]) == false)
                     {
                         frontier.Enqueue(leaves[0]);
                         transitionTable.Add(leaves[0], newActionList);
@@ -80,7 +93,7 @@ namespace TwentyAI
             }
             return false;
         }
-        private bool reachable(Point now, Point start, int dir)
+        private bool reachable(Point now, Point start, Point dest, int dir)
         {
             if (reachlist.Contains(start))
                 return true;
@@ -92,88 +105,96 @@ namespace TwentyAI
                 case 0://up
                     if(Current[start.X, start.Y].getConnect(0) == true)
                     {
-                        if (reachable(new Point(now.X, now.Y+1), new Point(start.X, start.Y+1), 0) == false)
+                        if (reachable(new Point(now.X, now.Y+1), new Point(start.X, start.Y+1), dest,  0) == false)
                             r = false;
                     }
                     else
                     {
                         if (now.Y >= 7 || isBlank[now.X, now.Y + 1] == false)
                             r = false;
+                        if (now.Y < 7 && Current[start.X, start.Y].getNumber() == Current[now.X, now.Y + 1].getNumber())
+                            r = true;
                     }
                     if(Current[start.X, start.Y].getConnect(2) == true)
                     {
-                        if (reachable(new Point(now.X-1, now.Y), new Point(start.X-1, start.Y), 0) == false)
+                        if (reachable(new Point(now.X-1, now.Y), new Point(start.X-1, start.Y), dest, 0) == false)
                             r = false;
                     }
                     if (Current[start.X, start.Y].getConnect(3) == true)
                     {
-                        if (reachable(new Point(now.X + 1, now.Y), new Point(start.X + 1, start.Y), 0) == false)
+                        if (reachable(new Point(now.X + 1, now.Y), new Point(start.X + 1, start.Y), dest, 0) == false)
                             r = false;
                     }
                     break;
                 case 1://down
                     if (Current[start.X, start.Y].getConnect(1) == true)
                     {
-                        if (reachable(new Point(now.X, now.Y - 1), new Point(start.X, start.Y - 1), 1) == false)
+                        if (reachable(new Point(now.X, now.Y - 1), new Point(start.X, start.Y - 1), dest, 1) == false)
                             r = false;
                     }
                     else
                     {
                         if (now.Y <= 0 || isBlank[now.X, now.Y - 1] == false)
                             r = false;
+                        if (now.Y > 0 && Current[start.X, start.Y].getNumber() == Current[now.X, now.Y - 1].getNumber())
+                            r = true;
                     }
                     if (Current[start.X, start.Y].getConnect(2) == true)
                     {
-                        if (reachable(new Point(now.X - 1, now.Y), new Point(start.X - 1, start.Y), 1) == false)
+                        if (reachable(new Point(now.X - 1, now.Y), new Point(start.X - 1, start.Y), dest, 1) == false)
                             r = false;
                     }
                     if (Current[start.X, start.Y].getConnect(3) == true)
                     {
-                        if (reachable(new Point(now.X + 1, now.Y), new Point(start.X + 1, start.Y), 1) == false)
+                        if (reachable(new Point(now.X + 1, now.Y), new Point(start.X + 1, start.Y), dest, 1) == false)
                             r = false;
                     }
                     break;
                 case 2://left
                     if (Current[start.X, start.Y].getConnect(2) == true)
                     {
-                        if (reachable(new Point(now.X-1, now.Y), new Point(start.X-1, start.Y), 2) == false)
+                        if (reachable(new Point(now.X-1, now.Y), new Point(start.X-1, start.Y), dest, 2) == false)
                             r = false;
                     }
                     else
                     {
                         if (now.X <= 0 || isBlank[now.X-1, now.Y] == false)
                             r = false;
+                        if (now.X > 0 && Current[start.X, start.Y].getNumber() == Current[now.X-1, now.Y].getNumber())
+                            r = true;
                     }
                     if (Current[start.X, start.Y].getConnect(0) == true)
                     {
-                        if (reachable(new Point(now.X, now.Y+1), new Point(start.X, start.Y+1), 2) == false)
+                        if (reachable(new Point(now.X, now.Y+1), new Point(start.X, start.Y+1), dest, 2) == false)
                             r = false;
                     }
                     if (Current[start.X, start.Y].getConnect(1) == true)
                     {
-                        if (reachable(new Point(now.X, now.Y-1), new Point(start.X, start.Y-1), 2) == false)
+                        if (reachable(new Point(now.X, now.Y-1), new Point(start.X, start.Y-1), dest, 2) == false)
                             r = false;
                     }
                     break;
                 case 3://right
                     if (Current[start.X, start.Y].getConnect(3) == true)
                     {
-                        if (reachable(new Point(now.X + 1, now.Y), new Point(start.X + 1, start.Y), 3) == false)
+                        if (reachable(new Point(now.X + 1, now.Y), new Point(start.X + 1, start.Y), dest, 3) == false)
                             r = false;
                     }
                     else
                     {
                         if (now.X >= 6 || isBlank[now.X + 1, now.Y] == false)
                             r = false;
+                        if (now.X < 6 && Current[start.X, start.Y].getNumber() == Current[now.X+1, now.Y].getNumber())
+                            r = true;
                     }
                     if (Current[start.X, start.Y].getConnect(0) == true)
                     {
-                        if (reachable(new Point(now.X, now.Y + 1), new Point(start.X, start.Y + 1), 3) == false)
+                        if (reachable(new Point(now.X, now.Y + 1), new Point(start.X, start.Y + 1), dest, 3) == false)
                             r = false;
                     }
                     if (Current[start.X, start.Y].getConnect(1) == true)
                     {
-                        if (reachable(new Point(now.X, now.Y - 1), new Point(start.X, start.Y - 1), 3) == false)
+                        if (reachable(new Point(now.X, now.Y - 1), new Point(start.X, start.Y - 1), dest, 3) == false)
                             r = false;
                     }
                     break;
@@ -183,8 +204,7 @@ namespace TwentyAI
             }
             return r;
         }
-
-        static Point start, dest;
+        
         private void moveBlock()
         {
             getCurrent();
@@ -200,5 +220,34 @@ namespace TwentyAI
             }
         }
 
+        static Point s, d;
+        List<Point> r;
+        private void testMovable()
+        {
+            s.X = Convert.ToInt32(this.startX.Text);
+            s.Y = Convert.ToInt32(this.startY.Text);
+            d.X = Convert.ToInt32(this.destX.Text);
+            d.Y = Convert.ToInt32(this.destY.Text);
+
+            this.sn.Text = Convert.ToString(Current[s.X, s.Y].getNumber());
+            this.dn.Text = Convert.ToString(Current[d.X, d.Y].getNumber());
+            Debug.WriteLine(s);
+            Debug.WriteLine(d);
+
+            bool m = movable(s, d, ref r);
+
+            if (m)
+            {
+                this.textMovable.Text = "True";
+                Debug.Write("Route: ");
+                for (int i = 0; i < r.Count; i++)
+                {
+                    Debug.Write(r[i] + " ");
+                }
+                Debug.Write("\n");
+            }
+            else
+                this.textMovable.Text = "False";
+        }
     }
 }

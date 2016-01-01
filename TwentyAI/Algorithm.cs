@@ -54,8 +54,18 @@ namespace TwentyAI
         }
         private bool isGoal(Block[,] node)
         {
-            //TODO
-            return false;
+            Dictionary<int, int> numberHashTable = new Dictionary<int, int>();
+            for(int i = 0; i < 7; i++)
+            {
+                for(int j = 0; j < 8; j++)
+                {
+                    if (numberHashTable.ContainsKey(node[i, j].getNumber()))
+                        return false;
+                    else
+                        numberHashTable.Add(node[i, j].getNumber(), 1);
+                }
+            }
+            return true;
         }
         private void getSuccessors(ref List<List<Point>> action, ref List<Block[,]> leaves, Block[,] leafNode)
         {
