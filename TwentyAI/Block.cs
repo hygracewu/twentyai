@@ -14,6 +14,15 @@ namespace TwentyAI
             _connect[0] = _connect[1] = _connect[2] = _connect[3] = false;
             _isJammed = false;
         }
+        public Block(Block old)
+        {
+            _number = old.getNumber();
+            _connect[0] = old.getConnect(0);
+            _connect[1] = old.getConnect(1);
+            _connect[2] = old.getConnect(2);
+            _connect[3] = old.getConnect(3);
+            _isJammed = old.getJammed();
+        }
         public int getNumber()
         {
             return _number;

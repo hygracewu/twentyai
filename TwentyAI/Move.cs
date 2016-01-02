@@ -249,5 +249,23 @@ namespace TwentyAI
             else
                 this.textMovable.Text = "False";
         }
+
+        private void testUpdate()
+        {
+            s.X = Convert.ToInt32(this.startX.Text);
+            s.Y = Convert.ToInt32(this.startY.Text);
+            d.X = Convert.ToInt32(this.destX.Text);
+            d.Y = Convert.ToInt32(this.destY.Text);
+            List<Point> test = new List<Point>();
+            test.Add(s);
+            test.Add(d);
+
+            Block[,] testResult = new Block[7, 8];
+            update(Current, test, ref testResult);
+            Current = testResult;
+            Debug.WriteLine("*******************************");
+
+            currentOutput();
+        }
     }
 }
