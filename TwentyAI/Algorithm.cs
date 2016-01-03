@@ -85,49 +85,36 @@ namespace TwentyAI
         List<Point> reputlist = new List<Point>();
         private void update(Block[,] state, List<Point> action, ref Block[,] result)
         {
-            //TODO
-            //useful function for getSuccessors()
-            merge(ref state, action[1], state[action[1].X, action[1].Y].getNumber() + 1, true);
-            state[action[0].X, action[0].Y].setNumber(0);
-
-            merge(ref state, action[0], 0, false);
-            reputlist.Clear();
-            if (state[action[0].X, action[0].Y].getConnect(0))
-                reput(ref state, new Point(action[0].X, action[0].Y + 1), new Point(action[1].X, action[1].Y + 1));
-            reputlist.Clear();
-            if (state[action[0].X, action[0].Y].getConnect(1))
-                reput(ref state, new Point(action[0].X, action[0].Y - 1), new Point(action[1].X, action[1].Y - 1));
-            reputlist.Clear();
-            if (state[action[0].X, action[0].Y].getConnect(2))
-                reput(ref state, new Point(action[0].X - 1, action[0].Y), new Point(action[1].X - 1, action[1].Y));
-            reputlist.Clear();
-            if (state[action[0].X, action[0].Y].getConnect(3))
-                reput(ref state, new Point(action[0].X + 1, action[0].Y), new Point(action[1].X + 1, action[1].Y));
-            state[action[0].X, action[0].Y].resetConnect();
-
-            string ooo = "";
-            for (int i = 8 - 1; i >= 0; i--)
+            if (state[action[0].X, action[0].Y].getNumber() == 0)
             {
-                for (int j = 0; j < 7; j++)
-                {
-                    ooo += state[j, i].getNumber().ToString("00");
-                    if (state[j, i].getConnect(3))
-                        ooo += "--";
-                    else
-                        ooo += "  ";
-                }
-                ooo += "\n";
-                for (int j = 0; j < 7; j++)
-                {
-                    if (state[j, i].getConnect(1))
-                        ooo += "|";
-                    else
-                        ooo += " ";
-                    ooo += "   ";
-                }
-                ooo += "\n";
+                Debug.WriteLine("ERROR, not a block!");
             }
-            Debug.Write(ooo + "\n");
+            if (state[action[1].X, action[1].Y].getNumber() == 0)
+            {
+                reputlist.Clear();
+                reput(ref state, new Point(action[0].X, action[0].Y), new Point(action[1].X, action[1].Y));
+            }
+            else
+            {
+                merge(ref state, action[1], state[action[1].X, action[1].Y].getNumber() + 1, true);
+                merge(ref state, action[0], 0, false);
+                state[action[0].X, action[0].Y].setNumber(0);
+
+                reputlist.Clear();
+                if (state[action[0].X, action[0].Y].getConnect(0))
+                    reput(ref state, new Point(action[0].X, action[0].Y + 1), new Point(action[1].X, action[1].Y + 1));
+                reputlist.Clear();
+                if (state[action[0].X, action[0].Y].getConnect(1))
+                    reput(ref state, new Point(action[0].X, action[0].Y - 1), new Point(action[1].X, action[1].Y - 1));
+                reputlist.Clear();
+                if (state[action[0].X, action[0].Y].getConnect(2))
+                    reput(ref state, new Point(action[0].X - 1, action[0].Y), new Point(action[1].X - 1, action[1].Y));
+                reputlist.Clear();
+                if (state[action[0].X, action[0].Y].getConnect(3))
+                    reput(ref state, new Point(action[0].X + 1, action[0].Y), new Point(action[1].X + 1, action[1].Y));
+
+                state[action[0].X, action[0].Y].resetConnect();
+            }
 
             while (true)
             {
@@ -151,45 +138,14 @@ namespace TwentyAI
                     }
                 }
 
-                if(queue.Count != 0)
-                    Debug.WriteLine(queue.Peek());
-                string oo = "";
-                for (int i = 8 - 1; i >= 0; i--)
-                {
-                    for (int j = 0; j < 7; j++)
-                    {
-                        oo += state[j, i].getNumber().ToString("00");
-                        if (state[j, i].getConnect(3))
-                            oo += "--";
-                        else
-                            oo += "  ";
-                    }
-                    oo += "\n";
-                    for (int j = 0; j < 7; j++)
-                    {
-                        if (state[j, i].getConnect(1))
-                            oo += "|";
-                        else
-                            oo += " ";
-                        oo += "   ";
-                    }
-                    oo += "\n";
-                }
-                Debug.Write(oo);
-
                 if (queue.Count == 0)
                     break;
 
-                while(queue.Count != 0)
+                while (queue.Count != 0)
                 {
                     Point leaf = (Point)queue.Dequeue();
                     reputlist.Clear();
-                    if (fallable(ref state, leaf))
-                    {
-                        Debug.WriteLine("now:" + leaf);
-                        reputlist.Clear();
-                        fall(ref state, leaf);
-                    }
+                    fall(ref state, leaf);
                 }
 
             }

@@ -25,7 +25,8 @@ namespace TwentyAI
         }
         public int getNumber()
         {
-            return _number;
+            int num = _number;
+            return num;
         }
         public void setNumber(int num)
         {
@@ -45,7 +46,8 @@ namespace TwentyAI
         }
         public bool getJammed()
         {
-            return _isJammed;
+            bool j = _isJammed;
+            return j;
         }
         public void setJammed(bool s)
         {
