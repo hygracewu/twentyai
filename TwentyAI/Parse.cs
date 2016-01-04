@@ -44,7 +44,6 @@ namespace TwentyAI
                     screenPositionConnect2[i, j].Y = initY - j * dy;
                 }
             }
-
         }
 
         private void getCurrent()
@@ -80,35 +79,39 @@ namespace TwentyAI
                     }
                 }
             }
-            for (int j = 0; j < 8; j++)
-            {
-                for (int i = 0; i < 7; i++)
-                {
-                    Current[i, j].setJammed( decideJammed(i, j) );
-                }
-            }
+            updateJammed(ref Current);
         }
-        private bool decideJammed(int x, int y)
+        private bool decideJammed(ref Block[,] state, int x, int y)
         {
             //up
             if (y < 7)
             {
-                if (Current[x, y + 1].getNumber() == 0)
+                if (state[x, y + 1].getNumber() == 0)
                     return false;
             }
             //left
             if (x > 0)
             {
-                if (Current[x - 1, y].getNumber() == 0)
+                if (state[x - 1, y].getNumber() == 0)
                     return false;
             }
             //right
             if (x < 6)
             {
-                if (Current[x + 1, y].getNumber() == 0)
+                if (state[x + 1, y].getNumber() == 0)
                     return false;
             }
             return true;
+        }
+        private void updateJammed(ref Block[,] state)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                for (int i = 0; i < 7; i++)
+                {
+                    state[i, j].setJammed(decideJammed(ref state, i, j));
+                }
+            }
         }
 
         private int color2num(Color color)
