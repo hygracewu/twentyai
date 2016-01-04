@@ -7,3 +7,12 @@ c:\users\user\documents\visual studio 2015\Projects\TwentyAI\TwentyAI\bin\Debug\
 c:\users\user\documents\visual studio 2015\Projects\TwentyAI\TwentyAI\bin\Debug\TwentyAI.pdb
 c:\users\user\documents\visual studio 2015\Projects\TwentyAI\TwentyAI\obj\Debug\TwentyAI.exe
 c:\users\user\documents\visual studio 2015\Projects\TwentyAI\TwentyAI\obj\Debug\TwentyAI.pdb
+D:\Dropbox\NTU\AI\twentyai\TwentyAI\bin\Debug\TwentyAI.exe.config
+D:\Dropbox\NTU\AI\twentyai\TwentyAI\obj\Debug\TwentyAI.exe
+D:\Dropbox\NTU\AI\twentyai\TwentyAI\obj\Debug\TwentyAI.pdb
+D:\Dropbox\NTU\AI\twentyai\TwentyAI\bin\Debug\TwentyAI.exe
+D:\Dropbox\NTU\AI\twentyai\TwentyAI\bin\Debug\TwentyAI.pdb
+D:\Dropbox\NTU\AI\twentyai\TwentyAI\obj\Debug\TwentyAI.csprojResolveAssemblyReference.cache
+D:\Dropbox\NTU\AI\twentyai\TwentyAI\obj\Debug\TwentyAI.Form1.resources
+D:\Dropbox\NTU\AI\twentyai\TwentyAI\obj\Debug\TwentyAI.Properties.Resources.resources
+D:\Dropbox\NTU\AI\twentyai\TwentyAI\obj\Debug\TwentyAI.csproj.GenerateResource.Cache
