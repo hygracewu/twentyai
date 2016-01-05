@@ -210,7 +210,7 @@ namespace TwentyAI
         {
             getCurrent();
             List<List<Point>> finalAction = new List<List<Point>>();
-            AStarSearch(ref finalAction, 100);
+            AStarSearch(ref finalAction, 10);
 
             Debug.WriteLine("\nfinal count: " + finalAction.Count);
             for (int i = 0; i < finalAction.Count; i++)

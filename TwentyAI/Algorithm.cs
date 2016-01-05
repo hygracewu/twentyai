@@ -152,9 +152,14 @@ namespace TwentyAI
                     totalConnect += state[i, j].getTotalConnect();
                     //方塊pair數少
                     if (numberHashTable.ContainsKey(state[i, j].getNumber()))
-                        ++pairNum;
+                    {
+                        if (state[i, j].getNumber() != 0)
+                            ++pairNum;
+                    }
                     else
+                    {
                         numberHashTable.Add(state[i, j].getNumber(), 1);
+                    }
                     //可動方塊數多
                     if (state[i, j].getJammed())
                         ++jammedNum;
@@ -187,11 +192,20 @@ namespace TwentyAI
                         + jammedNum * 10
                         + bottomNum * 30
                         + top7Num * 50
-                        + top8Num * 10000
+                        + top8Num * 300
                         + blockNum * 5
-                        + bottomSum * 3
+                        + bottomSum * 1
                         );
 
+            Debug.WriteLine("###" + score);
+            Debug.WriteLine(totalConnect);// * 100
+            Debug.WriteLine(pairNum);// * 50
+            Debug.WriteLine(jammedNum);// * 10
+            Debug.WriteLine(bottomNum);// * 30
+            Debug.WriteLine(top7Num);// * 50
+            Debug.WriteLine(top8Num);// * 10000
+            Debug.WriteLine(blockNum);// * 5
+            Debug.WriteLine(bottomSum);// * 3
 
             return score;
         }
@@ -338,13 +352,25 @@ namespace TwentyAI
         {
             state[pos.X, pos.Y].setNumber(num);
             if (state[pos.X, pos.Y].getConnect(0))
-                state[pos.X, pos.Y + 1].setConnect(1, false);
+            {
+                if (pos.Y < 6)
+                    state[pos.X, pos.Y + 1].setConnect(1, false);
+            }
             if (state[pos.X, pos.Y].getConnect(1))
-                state[pos.X, pos.Y - 1].setConnect(0, false);
+            {
+                if (pos.Y > 0)
+                    state[pos.X, pos.Y - 1].setConnect(0, false);
+            }
             if (state[pos.X, pos.Y].getConnect(2))
-                state[pos.X - 1, pos.Y].setConnect(3, false);
+            {
+                if (pos.X > 0)
+                    state[pos.X - 1, pos.Y].setConnect(3, false);
+            }
             if (state[pos.X, pos.Y].getConnect(3))
-                state[pos.X + 1, pos.Y].setConnect(2, false);
+            {
+                if (pos.X < 5)
+                    state[pos.X + 1, pos.Y].setConnect(2, false);
+            }
             if(resetConnectedOrNot)
                 state[pos.X, pos.Y].resetConnect();
         }
@@ -354,6 +380,10 @@ namespace TwentyAI
                 return;
             reputlist.Add(ori);
 
+            if (des.X < 0 || des.X > 6 || ori.X < 0 || ori.X > 6) return;
+            if (des.Y < 0 || des.Y > 7 || ori.Y < 0 || ori.Y > 7) return;
+
+            //Debug.WriteLine("300: " + des.X + " " + des.Y + " " + ori.X + " " + ori.Y);
             if (state[des.X, des.Y].getNumber() == state[ori.X, ori.Y].getNumber())
                 merge(ref state, des, state[des.X, des.Y].getNumber()+1, true);
             else
@@ -375,6 +405,9 @@ namespace TwentyAI
             if (reputlist.Contains(p))
                 return true;
             reputlist.Add(p);
+
+            if (p.X < 0 || p.X > 6) return false;
+            if (p.Y < 0 || p.Y > 7) return false;
 
             bool r = true;
             if(state[p.X, p.Y - 1].getNumber() != 0 && state[p.X, p.Y - 1].getNumber() != state[p.X, p.Y].getNumber())
