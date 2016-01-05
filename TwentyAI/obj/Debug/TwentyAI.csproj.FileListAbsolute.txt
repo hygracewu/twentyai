@@ -16,3 +16,6 @@ D:\Dropbox\NTU\AI\twentyai\TwentyAI\obj\Debug\TwentyAI.csprojResolveAssemblyRefe
 D:\Dropbox\NTU\AI\twentyai\TwentyAI\obj\Debug\TwentyAI.Form1.resources
 D:\Dropbox\NTU\AI\twentyai\TwentyAI\obj\Debug\TwentyAI.Properties.Resources.resources
 D:\Dropbox\NTU\AI\twentyai\TwentyAI\obj\Debug\TwentyAI.csproj.GenerateResource.Cache
+C:\Users\USER\Documents\AI Final\twentyai\TwentyAI\bin\Debug\TwentyAI.exe.config
+C:\Users\USER\Documents\AI Final\twentyai\TwentyAI\obj\Debug\TwentyAI.exe
+C:\Users\USER\Documents\AI Final\twentyai\TwentyAI\obj\Debug\TwentyAI.pdb

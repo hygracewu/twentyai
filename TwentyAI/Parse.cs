@@ -86,19 +86,19 @@ namespace TwentyAI
             //up
             if (y < 7)
             {
-                if (state[x, y + 1].getNumber() == 0)
+                if (state[x, y + 1].getNumber() == 0 || state[x, y + 1].getNumber() == state[x, y].getNumber())
                     return false;
             }
             //left
             if (x > 0)
             {
-                if (state[x - 1, y].getNumber() == 0)
+                if (state[x - 1, y].getNumber() == 0 || state[x - 1, y].getNumber() == state[x, y].getNumber())
                     return false;
             }
             //right
             if (x < 6)
             {
-                if (state[x + 1, y].getNumber() == 0)
+                if (state[x + 1, y].getNumber() == 0 || state[x + 1, y].getNumber() == state[x, y].getNumber())
                     return false;
             }
             return true;
