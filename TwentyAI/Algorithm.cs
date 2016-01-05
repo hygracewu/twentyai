@@ -16,8 +16,9 @@ namespace TwentyAI
             List<List<Point>> actionList = new List<List<Point>>();
             Dictionary<Block[,], List<List<Point>>> transitionTable = new Dictionary<Block[,], List<List<Point>>>();
             Block[,] leafNode = new Block[7,8];
-            while (frontier.Count() != 0 || depth > 0)
+            while (frontier.Count() != 0 && depth > 0)
             {
+                Debug.WriteLine("depth: " + depth);
                 depth -= 1;
                 leafNode = frontier.Pop();
                 if (transitionTable.ContainsKey(leafNode))
@@ -34,11 +35,13 @@ namespace TwentyAI
                 List<Block[,]> leaves = new List<Block[,]>();
                 getSuccessors(ref actions, ref leaves, leafNode);
 
+                Debug.WriteLine("leaves count: " + leaves.Count);
                 while(leaves.Count != 0)
                 {
                     Block[,] leaf = leaves[0];
                     leaves.RemoveAt(0);
                     List<Point> leafAction = actions[0];
+                    Debug.WriteLine("leafAction: " + leafAction[0] + " " + leafAction[leafAction.Count-1]);
                     actions.RemoveAt(0);
                     List<List<Point>> leafActionList = actionList;
                     leafActionList.Add(leafAction);
@@ -51,7 +54,8 @@ namespace TwentyAI
                     leaves.Remove(leaf);
                 }
             }
-
+            finalActionList = actionList;
+            return;
         }
         private void getSuccessors(ref List<List<Point>> action, ref List<Block[,]> leaves, Block[,] leafNode)
         {

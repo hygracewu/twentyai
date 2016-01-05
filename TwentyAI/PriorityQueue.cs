@@ -25,7 +25,7 @@ namespace TwentyAI
         public void Push(T data,int value)
         {
             //_data.Add(data);
-            //_dict.Add(data, value);
+            _dict.Add(data, value);
 
             _data.Add(data);
             int ci = _data.Count - 1; // child index; start at end

@@ -208,16 +208,23 @@ namespace TwentyAI
         private void moveBlock()
         {
             getCurrent();
+            currentOutput();
             List<List<Point>> finalAction = new List<List<Point>>();
             AStarSearch(ref finalAction, 2);
+
+            Debug.WriteLine("final count: " + finalAction.Count);
             for(int i = 0; i < finalAction.Count; i++)
             {
+                Debug.Write("\n=====");
+                Debug.Write(i);
+
                 List<Point> route = new List<Point>();
                 if (movable(Current, finalAction[i][0], finalAction[i][1], ref route))
                 {
                     DragAlongRoute(ref route);
                 }
                 getCurrent();
+                currentOutput();
             }
         }
 
