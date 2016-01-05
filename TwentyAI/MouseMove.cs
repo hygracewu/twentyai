@@ -135,8 +135,8 @@ namespace TwentyAI
         }
         static public void DragAlongRoute(ref List<Point> route)
         {
-            Debug.Write(route[0]);
-            Debug.Write(route[route.Count-1]);
+            //Debug.Write(route[0]);
+            //Debug.Write(route[route.Count-1]);
             Cursor.Position = cursorPosition[route[0].X, route[0].Y];
             LeftDown();
             route.RemoveAt(0);
