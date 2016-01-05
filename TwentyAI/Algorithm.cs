@@ -18,7 +18,7 @@ namespace TwentyAI
             Block[,] leafNode = new Block[7,8];
             while (frontier.Count() != 0 && depth > 0)
             {
-                Debug.WriteLine("depth: " + depth);
+                //Debug.WriteLine("depth: " + depth);
                 depth -= 1;
                 leafNode = frontier.Pop();
                 if (transitionTable.ContainsKey(leafNode))
@@ -35,13 +35,13 @@ namespace TwentyAI
                 List<Block[,]> leaves = new List<Block[,]>();
                 getSuccessors(ref actions, ref leaves, leafNode);
 
-                Debug.WriteLine("leaves count: " + leaves.Count);
+                //Debug.WriteLine("leaves count: " + leaves.Count);
                 while(leaves.Count != 0)
                 {
                     Block[,] leaf = leaves[0];
                     leaves.RemoveAt(0);
                     List<Point> leafAction = actions[0];
-                    Debug.WriteLine("leafAction: " + leafAction[0] + " " + leafAction[leafAction.Count-1]);
+                    //Debug.WriteLine("leafAction: " + leafAction[0] + " " + leafAction[leafAction.Count-1]);
                     actions.RemoveAt(0);
                     List<List<Point>> leafActionList = actionList;
                     leafActionList.Add(leafAction);
@@ -59,8 +59,6 @@ namespace TwentyAI
         }
         private void getSuccessors(ref List<List<Point>> action, ref List<Block[,]> leaves, Block[,] leafNode)
         {
-            //function "update(Block[,] state, List<Point> action, ref Block[,] result)" is useful
-            //updateJammed(ref Block[,] state)
             updateJammed(ref leafNode);
             List<Point>[] blockHash = new List<Point>[21];
             for (int j = 0; j < 21; j++)
@@ -87,6 +85,32 @@ namespace TwentyAI
                         Block[,] sta = new Block[7, 8];
                         update(leafNode, candidateList[j], ref sta);
                         leaves.Add(sta);
+                    }
+                }
+            }
+
+            int[] topPos = new int[7];
+            getTopPos(leafNode, ref topPos);
+            for(int i = 20; i >= 1; i--)
+            {
+                if (blockHash[i].Count > 0)
+                {
+                    for (int j = 0; j < blockHash[i].Count; j++)
+                    {
+                        for(int k = 0; k < 7; k++)
+                        {
+                            if (blockHash[i][j].X == k)
+                                continue;
+
+                            List<Point> act = new List<Point>();
+                            act.Add(blockHash[i][j]);
+                            act.Add(new Point(j, topPos[j]));
+                            action.Add(act);
+
+                            Block[,] sta = new Block[7, 8];
+                            update(leafNode, act, ref sta);
+                            leaves.Add(sta);
+                        }
                     }
                 }
             }
@@ -356,5 +380,20 @@ namespace TwentyAI
                 }
             }
         }
+        private void getTopPos(Block[,] state, ref int[] topPos)
+        {
+            for(int i = 0; i < 7; i++)
+            {
+                for(int j = 0; j < 8; j++)
+                {
+                    if(state[i, j].getNumber() == 0)
+                    {
+                        topPos[i] = j;
+                        break;
+                    }
+                }
+            }
+        }
+
     }
 }
