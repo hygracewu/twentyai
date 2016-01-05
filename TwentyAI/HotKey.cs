@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 
 
@@ -12,6 +13,7 @@ namespace TwentyAI
         [DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
+        private Thread myThread;
         protected override void WndProc(ref Message m)
         {
             if (m.Msg == 0x0312)
@@ -22,7 +24,13 @@ namespace TwentyAI
                 if ((modifiers == 0x0000 && vk == 0x74))
                 {
                     //MessageBox.Show("F5 ");
+                    //myThread = new Thread(new ThreadStart(myHotKeyEvent));
+                    //myThread.Start();
                     myHotKeyEvent();
+                }
+                if ((modifiers == 0x0000 && vk == 0x75))
+                {
+                    myThread.Abort();
                 }
             }
             base.WndProc(ref m);
@@ -31,6 +39,7 @@ namespace TwentyAI
         void registerHotKey()
         {
             var success = RegisterHotKey(this.Handle, this.GetType().GetHashCode(), 0x0000, 0x74);
+            var success2 = RegisterHotKey(this.Handle, this.GetType().GetHashCode(), 0x0000, 0x75);
         }
 
         void unregisterHotKey()

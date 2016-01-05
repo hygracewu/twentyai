@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace TwentyAI
@@ -213,7 +214,7 @@ namespace TwentyAI
             AStarSearch(ref finalAction, 2);
 
             Debug.WriteLine("final count: " + finalAction.Count);
-            for(int i = 0; i < finalAction.Count; i++)
+            for (int i = 0; i < finalAction.Count; i++)
             {
                 Debug.Write("\n=====");
                 Debug.Write(i);
