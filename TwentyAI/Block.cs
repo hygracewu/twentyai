@@ -38,7 +38,13 @@ namespace TwentyAI
         }
         public int getTotalConnect()
         {
-            return _connect[0]?1:0 + _connect[1]?1:0 + _connect[2]?1:0 + _connect[3]?1:0;
+            int sum = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                if (_connect[i])
+                    ++sum;
+            }
+            return sum;
         }
         public void setConnect(int idx, bool set)
         {

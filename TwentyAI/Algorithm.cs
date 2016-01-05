@@ -45,7 +45,7 @@ namespace TwentyAI
                     actions.RemoveAt(0);
                     List<List<Point>> leafActionList = actionList;
                     leafActionList.Add(leafAction);
-                    int leafCost = heuristic(leaf);
+                    int leafCost = evaluationFunction(leaf);
                     if(explored.Contains(leaf) ==false && frontier.Contains(leaf) == false)
                     {
                         frontier.Push(leaf, leafCost);
@@ -104,7 +104,7 @@ namespace TwentyAI
 
                             List<Point> act = new List<Point>();
                             act.Add(blockHash[i][j]);
-                            act.Add(new Point(j, topPos[j]));
+                            act.Add(new Point(j, topPos[blockHash[i][j].X]));
                             action.Add(act);
 
                             Block[,] sta = new Block[7, 8];
@@ -166,12 +166,12 @@ namespace TwentyAI
                 if (state[i, 0].getNumber() != 0)
                     ++bottomNum;
                 //高度(最上面1~2層扣分)
-                if (state[i, 7].getNumber() != 0)
+                if (state[i, 6].getNumber() != 0)
                     ++top7Num;
-                if (state[i, 8].getNumber() != 0)
+                if (state[i, 7].getNumber() != 0)
                     ++top8Num;
                 //最下層數字小一點(不太重要
-                bottomSum += state[i, 0];  
+                bottomSum += state[i, 0].getNumber();  
             }
 
             totalConnect /= 2;
@@ -182,7 +182,7 @@ namespace TwentyAI
             //算分數(爛度(越大越爛
             int score = (
                         + totalConnect * 100
-                        + pairNum * 50
+                        + pairNum * 200
                         + jammedNum * 10
                         + bottomNum * 30
                         + top7Num * 50
