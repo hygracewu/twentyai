@@ -97,6 +97,78 @@ namespace TwentyAI
             //TODO
             return 0;
         }
+        private int evaluationFunction(Block[,] state)
+        {
+            //TODO
+            //priority高->低
+
+            //連結數少
+            int totalConnect = 0;
+            //方塊pair數少
+            Dictionary<int, int> numberHashTable = new Dictionary<int, int>();
+            int pairNum = 0;
+            //可動方塊數多
+            int jammedNum = 0;
+            //最下層column數少一點
+            int bottomNum = 0;
+            //高度(最上面1~2層扣分)
+            int top7Num = 0;
+            int top8Num = 0;
+            //方塊個數少(?(不太重要
+            int blockNum = 0;
+            //最下層數字小一點(不太重要
+            int bottomSum = 0;
+
+            for (int i = 0; i < 7; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    //連結數少
+                    totalConnect += state[i, j].getTotalConnect();
+                    //方塊pair數少
+                    if (numberHashTable.ContainsKey(state[i, j].getNumber()))
+                        ++pairNum;
+                    else
+                        numberHashTable.Add(state[i, j].getNumber(), 1);
+                    //可動方塊數多
+                    jammedNum += state[i, j].getJammed();
+                    //方塊個數少(?(不太重要
+                    if (state[i, j].getNumber() != 0)
+                        ++blockNum;
+                }
+
+                //最下層column數少一點
+                if (state[i, 0].getNumber() != 0)
+                    ++bottomNum;
+                //高度(最上面1~2層扣分)
+                if (state[i, 7].getNumber() != 0)
+                    ++top7Num;
+                if (state[i, 8].getNumber() != 0)
+                    ++top8Num;
+                //最下層數字小一點(不太重要
+                bottomSum += state[i, 0];  
+            }
+
+            totalConnect /= 2;
+
+            //方塊自由度高(好麻煩="=
+
+
+            //算分數(爛度(越大越爛
+            int score = (
+                        + totalConnect * 100
+                        + pairNum * 50
+                        + jammedNum * 10
+                        + bottomNum * 30
+                        + top7Num * 50
+                        + top8Num * 10000
+                        + blockNum * 5
+                        + bottomSum * 3
+                        );
+
+
+            return score;
+        }
 
         /**************************************/
         /* The code below should not be changed.  */
