@@ -155,7 +155,8 @@ namespace TwentyAI
                     else
                         numberHashTable.Add(state[i, j].getNumber(), 1);
                     //可動方塊數多
-                    jammedNum += state[i, j].getJammed();
+                    if (state[i, j].getJammed())
+                        ++jammedNum;
                     //方塊個數少(?(不太重要
                     if (state[i, j].getNumber() != 0)
                         ++blockNum;
