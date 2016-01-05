@@ -148,7 +148,7 @@ namespace TwentyAI
             }
             Thread.Sleep(50);
             LeftUp();
-            Thread.Sleep(50);
+            Thread.Sleep(200);
         }
     }
 }

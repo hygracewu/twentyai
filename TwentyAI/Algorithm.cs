@@ -35,7 +35,7 @@ namespace TwentyAI
                 List<Block[,]> leaves = new List<Block[,]>();
                 getSuccessors(ref actions, ref leaves, leafNode);
 
-                Debug.WriteLine("leaves count: " + leaves.Count);
+                //Debug.WriteLine("leaves count: " + leaves.Count);
                 while(leaves.Count != 0)
                 {
                     Block[,] leaf = leaves[0];
@@ -43,10 +43,9 @@ namespace TwentyAI
                     List<Point> leafAction = actions[0];
                     //Debug.WriteLine("leafAction: " + leafAction[0] + " " + leafAction[leafAction.Count-1]);
                     actions.RemoveAt(0);
-                    //List<List<Point>> leafActionList = actionList;
                     List<List<Point>> leafActionList = new List<List<Point>>(actionList);
                     leafActionList.Add(leafAction);
-                    Debug.WriteLine("-----" + leafActionList.Count);
+                    //Debug.WriteLine("-----" + leafActionList.Count);
                     int leafCost = evaluationFunction(leaf);
                     if(explored.Contains(leaf) ==false && frontier.Contains(leaf) == false)
                     {
@@ -106,7 +105,7 @@ namespace TwentyAI
 
                             List<Point> act = new List<Point>();
                             act.Add(blockHash[i][j]);
-                            act.Add(new Point(j, topPos[blockHash[i][j].X]));
+                            act.Add(new Point(k, topPos[k]));
                             action.Add(act);
 
                             Block[,] sta = new Block[7, 8];
