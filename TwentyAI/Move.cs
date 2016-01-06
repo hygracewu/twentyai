@@ -233,9 +233,6 @@ namespace TwentyAI
 
         private void moveBlock(int option)
         {
-            getCurrent();
-            currentOutput();
-
             while (true)
             {
                 getCurrent();

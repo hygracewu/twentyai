@@ -27,7 +27,7 @@ namespace TwentyAI
             //0: A*
             //1: BFS
             //2: DFS
-            moveBlock(0);
+            moveBlock(1);
         }
         /*private void UI(ref string a)
         {
