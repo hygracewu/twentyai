@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -46,7 +47,7 @@ namespace TwentyAI
                     List<List<Point>> leafActionList = new List<List<Point>>(actionList);
                     leafActionList.Add(leafAction);
                     //Debug.WriteLine("-----" + leafActionList.Count);
-                    int leafCost = evaluationFunction(leaf);
+                    int leafCost = evaluationFunction(leaf) + heuristic(leafAction);
                     if (explored.Contains(leaf) == false && frontier.Contains(leaf) == false)
                     {
                         frontier.Push(leaf, leafCost);
@@ -125,10 +126,9 @@ namespace TwentyAI
             }
 
         }
-        private int heuristic(Block[,] state)
+        private int heuristic(List<Point> action)
         {
-            //TODO
-            return 0;
+            return Math.Abs( (action[0].X - action[1].X) + (action[0].Y - action[0].Y) );
         }
         private int evaluationFunction(Block[,] state)
         {
