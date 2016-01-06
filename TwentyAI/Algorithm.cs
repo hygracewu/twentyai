@@ -99,11 +99,10 @@ namespace TwentyAI
                 {
                     for (int j = 0; j < blockHash[i].Count; j++)
                     {
+                        if (blockHash[i][j].X % 2 == 1)
+                            continue;
                         for (int k = 0; k < 7; k+=2)
                         {
-                            if (blockHash[i][j].X == k)
-                                continue;
-
                             List<Point> temp = new List<Point>();
                             if (movable(leafNode, blockHash[i][j], new Point(k, topPos[k]), ref temp))
                             {
