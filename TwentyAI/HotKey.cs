@@ -24,9 +24,9 @@ namespace TwentyAI
                 if ((modifiers == 0x0000 && vk == 0x74))
                 {
                     //MessageBox.Show("F5 ");
-                    //myThread = new Thread(new ThreadStart(myHotKeyEvent));
-                    //myThread.Start();
-                    myHotKeyEvent();
+                    myThread = new Thread(new ThreadStart(myHotKeyEvent));
+                    myThread.Start();
+                    //myHotKeyEvent();
                 }
                 if ((modifiers == 0x0000 && vk == 0x75))
                 {

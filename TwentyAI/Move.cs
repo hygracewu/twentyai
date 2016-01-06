@@ -233,8 +233,7 @@ namespace TwentyAI
 
         private void moveBlock()
         {
-            int iter = 0;
-            while (iter < 100)
+            while (true)
             {
                 getCurrent();
                 List<List<Point>> finalAction = new List<List<Point>>();
@@ -255,7 +254,7 @@ namespace TwentyAI
                     }
                     else
                     {
-                        Debug.WriteLine("ERROR!!!!");
+                        /*Debug.WriteLine("ERROR!!!!");
                         string oo = "";
                         for (int ii = 8 - 1; ii >= 0; ii--)
                         {
@@ -279,12 +278,11 @@ namespace TwentyAI
                             oo += "\n";
                         }
                         oo += "\n";
-                        Debug.Write(oo);
+                        Debug.Write(oo);*/
                         break;
                     }
                 }
-                currentOutput();
-                ++iter;
+                //currentOutput();
                 Thread.Sleep(1000);
             }
         }
