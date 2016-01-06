@@ -100,6 +100,11 @@ namespace TwentyAI
                 return true;
             reachlist.Add(start);
 
+            if (now.X < 0 || now.X > 6 || start.X < 0 || start.X > 6 || dest.X < 0 || dest.X > 6)
+                return false;
+            if (now.Y < 0 || now.Y > 7 || start.Y < 0 || start.Y > 7 || dest.Y < 0 || dest.Y > 7)
+                return false;
+
             bool r = true;
             switch (dir)
             {
@@ -210,7 +215,7 @@ namespace TwentyAI
         {
             getCurrent();
             List<List<Point>> finalAction = new List<List<Point>>();
-            AStarSearch(ref finalAction, 100);
+            AStarSearch(ref finalAction, 5);
 
             Debug.WriteLine("\nfinal count: " + finalAction.Count);
             for (int i = 0; i < finalAction.Count; i++)

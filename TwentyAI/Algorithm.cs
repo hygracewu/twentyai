@@ -73,7 +73,7 @@ namespace TwentyAI
                 }
             }
 
-            /*for (int i = 20; i >= 1; i--)
+            for (int i = 20; i >= 1; i--)
             {
                 if (blockHash[i].Count > 1)
                 {
@@ -88,7 +88,7 @@ namespace TwentyAI
                         leaves.Add(sta);
                     }
                 }
-            }*/
+            }
 
             updateJammed2(ref leafNode);
             int[] topPos = new int[7];
@@ -193,8 +193,8 @@ namespace TwentyAI
 
             //算分數(爛度(越大越爛
             int score = (
-                        +totalConnect * 100
-                        + pairNum * 200
+                        + totalConnect * 100
+                        + pairNum * 100
                         + jammedNum * 10
                         + bottomNum * 30
                         + top7Num * 50
