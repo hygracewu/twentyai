@@ -73,6 +73,7 @@ namespace TwentyAI
                 }
             }
 
+            bool num = false;
             for (int i = 20; i >= 1; i--)
             {
                 if (blockHash[i].Count > 1)
@@ -82,7 +83,7 @@ namespace TwentyAI
                     for (int j = 0; j < candidateList.Count; j++)
                     {
                         action.Add(candidateList[j]);
-
+                        num = true;
                         Block[,] sta = new Block[7, 8];
                         update(leafNode, candidateList[j], ref sta);
                         leaves.Add(sta);
@@ -99,10 +100,12 @@ namespace TwentyAI
                 {
                     for (int j = 0; j < blockHash[i].Count; j++)
                     {
-                        if (blockHash[i][j].X % 2 == 0)
+                        if (num && blockHash[i][j].X % 2 == 0)
                             continue;
                         for (int k = 0; k < 7; k+=2)
                         {
+                            if (blockHash[i][j].X == k)
+                                continue;
                             List<Point> temp = new List<Point>();
                             if (movable(leafNode, blockHash[i][j], new Point(k, topPos[k]), ref temp))
                             {
@@ -213,7 +216,7 @@ namespace TwentyAI
 
             //算分數(爛度(越大越爛
             int score = (
-                        + totalConnect * 200
+                        + totalConnect * 800
                         //+ pairNum * 100
                         + jammedNum * 10
                         + bottomNum * 30

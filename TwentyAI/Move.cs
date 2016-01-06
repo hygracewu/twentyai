@@ -239,11 +239,11 @@ namespace TwentyAI
                 List<List<Point>> finalAction = new List<List<Point>>();
                 AStarSearch(ref finalAction, 100);
 
-                Debug.WriteLine("\nfinal count: " + finalAction.Count);
+                //Debug.WriteLine("\nfinal count: " + finalAction.Count);
                 for (int i = 0; i < finalAction.Count; i++)
                 {
-                    Debug.Write("=====");
-                    Debug.WriteLine(i + ":" + finalAction[i][0] + " " + finalAction[i][1]);
+                    //Debug.Write("=====");
+                    //Debug.WriteLine(i + ":" + finalAction[i][0] + " " + finalAction[i][1]);
 
                     List<Point> route = new List<Point>();
                     getCurrent();
@@ -283,7 +283,7 @@ namespace TwentyAI
                     }
                 }
                 //currentOutput();
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
             }
         }
 
