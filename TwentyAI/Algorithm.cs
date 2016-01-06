@@ -11,11 +11,11 @@ namespace TwentyAI
         private void AStarSearch(ref List<List<Point>> finalActionList, int depth)
         {
             PriorityQueue<Block[,]> frontier = new PriorityQueue<Block[,]>();
-            frontier.Push(Current,1);
+            frontier.Push(Current, 1);
             List<Block[,]> explored = new List<Block[,]>();
             List<List<Point>> actionList = new List<List<Point>>();
             Dictionary<Block[,], List<List<Point>>> transitionTable = new Dictionary<Block[,], List<List<Point>>>();
-            Block[,] leafNode = new Block[7,8];
+            Block[,] leafNode = new Block[7, 8];
             while (frontier.Count() != 0 && depth > 0)
             {
                 //Debug.WriteLine("depth: " + depth);
@@ -36,7 +36,7 @@ namespace TwentyAI
                 getSuccessors(ref actions, ref leaves, leafNode);
 
                 //Debug.WriteLine("leaves count: " + leaves.Count);
-                while(leaves.Count != 0)
+                while (leaves.Count != 0)
                 {
                     Block[,] leaf = leaves[0];
                     leaves.RemoveAt(0);
@@ -47,7 +47,7 @@ namespace TwentyAI
                     leafActionList.Add(leafAction);
                     //Debug.WriteLine("-----" + leafActionList.Count);
                     int leafCost = evaluationFunction(leaf);
-                    if(explored.Contains(leaf) ==false && frontier.Contains(leaf) == false)
+                    if (explored.Contains(leaf) == false && frontier.Contains(leaf) == false)
                     {
                         frontier.Push(leaf, leafCost);
                         transitionTable.Add(leaf, leafActionList);
@@ -66,20 +66,20 @@ namespace TwentyAI
                 blockHash[j] = new List<Point>();
             for (int j = 7; j >= 0; j--)
             {
-                for(int i = 0; i < 7; i++)
+                for (int i = 0; i < 7; i++)
                 {
-                    if(leafNode[i, j].getJammed() == false)
-                        blockHash[leafNode[i, j].getNumber()].Add(new Point(i ,j));
+                    if (leafNode[i, j].getJammed() == false)
+                        blockHash[leafNode[i, j].getNumber()].Add(new Point(i, j));
                 }
             }
 
-            for(int i = 20; i >= 1; i--)
+            /*for (int i = 20; i >= 1; i--)
             {
-                if(blockHash[i].Count > 1)
+                if (blockHash[i].Count > 1)
                 {
                     List<List<Point>> candidateList = new List<List<Point>>();
                     getCandidates(blockHash[i], ref candidateList, leafNode);
-                    for(int j = 0; j < candidateList.Count; j++)
+                    for (int j = 0; j < candidateList.Count; j++)
                     {
                         action.Add(candidateList[j]);
 
@@ -88,29 +88,34 @@ namespace TwentyAI
                         leaves.Add(sta);
                     }
                 }
-            }
+            }*/
 
             int[] topPos = new int[7];
             getTopPos(leafNode, ref topPos);
-            for(int i = 20; i >= 1; i--)
+            for (int i = 20; i >= 1; i--)
             {
                 if (blockHash[i].Count > 0)
                 {
                     for (int j = 0; j < blockHash[i].Count; j++)
                     {
-                        for(int k = 0; k < 7; k++)
+                        for (int k = 0; k < 7; k++)
                         {
                             if (blockHash[i][j].X == k)
                                 continue;
 
-                            List<Point> act = new List<Point>();
-                            act.Add(blockHash[i][j]);
-                            act.Add(new Point(k, topPos[k]));
-                            action.Add(act);
+                            List<Point> temp = new List<Point>();
+                            if (movable(leafNode, blockHash[i][j], new Point(k, topPos[k]), ref temp))
+                            {
+                                List<Point> act = new List<Point>();
+                                act.Add(blockHash[i][j]);
+                                act.Add(new Point(k, topPos[k]));
+                                action.Add(act);
 
-                            Block[,] sta = new Block[7, 8];
-                            update(leafNode, act, ref sta);
-                            leaves.Add(sta);
+                                Block[,] sta = new Block[7, 8];
+                                update(leafNode, act, ref sta);
+                                leaves.Add(sta);
+
+                            }
                         }
                     }
                 }
@@ -152,9 +157,14 @@ namespace TwentyAI
                     totalConnect += state[i, j].getTotalConnect();
                     //方塊pair數少
                     if (numberHashTable.ContainsKey(state[i, j].getNumber()))
-                        ++pairNum;
+                    {
+                        if (state[i, j].getNumber() != 0)
+                            ++pairNum;
+                    }
                     else
+                    {
                         numberHashTable.Add(state[i, j].getNumber(), 1);
+                    }
                     //可動方塊數多
                     if (state[i, j].getJammed())
                         ++jammedNum;
@@ -172,7 +182,7 @@ namespace TwentyAI
                 if (state[i, 7].getNumber() != 0)
                     ++top8Num;
                 //最下層數字小一點(不太重要
-                bottomSum += state[i, 0].getNumber();  
+                bottomSum += state[i, 0].getNumber();
             }
 
             totalConnect /= 2;
@@ -182,16 +192,25 @@ namespace TwentyAI
 
             //算分數(爛度(越大越爛
             int score = (
-                        + totalConnect * 100
+                        +totalConnect * 100
                         + pairNum * 200
                         + jammedNum * 10
                         + bottomNum * 30
                         + top7Num * 50
-                        + top8Num * 10000
+                        + top8Num * 300
                         + blockNum * 5
-                        + bottomSum * 3
+                        + bottomSum * 1
                         );
 
+            Debug.WriteLine("###" + score);
+            Debug.WriteLine(totalConnect);// * 100
+            Debug.WriteLine(pairNum);// * 50
+            Debug.WriteLine(jammedNum);// * 10
+            Debug.WriteLine(bottomNum);// * 30
+            Debug.WriteLine(top7Num);// * 50
+            Debug.WriteLine(top8Num);// * 10000
+            Debug.WriteLine(blockNum);// * 5
+            Debug.WriteLine(bottomSum);// * 3
 
             return score;
         }
@@ -218,9 +237,9 @@ namespace TwentyAI
         private void update(Block[,] state, List<Point> action, ref Block[,] result)
         {
             //result = state;
-            for(int i = 0; i < 7; i++)
+            for (int i = 0; i < 7; i++)
             {
-                for(int j = 0; j < 8; j++)
+                for (int j = 0; j < 8; j++)
                 {
                     result[i, j] = new Block(state[i, j]);
                 }
@@ -262,9 +281,9 @@ namespace TwentyAI
             {
                 Queue queue = new Queue();
                 List<Point> ignore = new List<Point>();
-                for(int i = 0; i < 7; i++)
+                for (int i = 0; i < 7; i++)
                 {
-                    for (int j = 1; j < 8; j++)
+                    for (int j = 7; j > 0; j--)
                     {
                         if (result[i, j].getNumber() == 0 || ignore.Contains(new Point(i, j)))
                             continue;
@@ -282,33 +301,7 @@ namespace TwentyAI
 
                 if (queue.Count == 0)
                     break;
-
-                /*if (queue.Count != 0)
-                    Debug.WriteLine("Queue: " + queue.Peek());
-                string oo = "";
-                for (int i = 8 - 1; i >= 0; i--)
-                {
-                    for (int j = 0; j < 7; j++)
-                    {
-                        oo += result[j, i].getNumber().ToString("00");
-                        if (result[j, i].getConnect(3))
-                            oo += "--";
-                        else
-                            oo += "  ";
-                    }
-                    oo += "\n";
-                    for (int j = 0; j < 7; j++)
-                    {
-                        if (result[j, i].getConnect(1))
-                            oo += "|";
-                        else
-                            oo += " ";
-                        oo += "   ";
-                    }
-                    oo += "\n";
-                }
-                Debug.Write(oo);*/
-
+                
                 while (queue.Count != 0)
                 {
                     Point leaf = (Point)queue.Dequeue();
@@ -317,7 +310,7 @@ namespace TwentyAI
                 }
 
             }
-            
+
             //result =  result;
         }
         private void addIgnore(ref Block[,] state, ref List<Point> ignore, ref Queue queue, Point p)
@@ -338,14 +331,26 @@ namespace TwentyAI
         {
             state[pos.X, pos.Y].setNumber(num);
             if (state[pos.X, pos.Y].getConnect(0))
-                state[pos.X, pos.Y + 1].setConnect(1, false);
+            {
+                if (pos.Y < 6)
+                    state[pos.X, pos.Y + 1].setConnect(1, false);
+            }
             if (state[pos.X, pos.Y].getConnect(1))
-                state[pos.X, pos.Y - 1].setConnect(0, false);
+            {
+                if (pos.Y > 0)
+                    state[pos.X, pos.Y - 1].setConnect(0, false);
+            }
             if (state[pos.X, pos.Y].getConnect(2))
-                state[pos.X - 1, pos.Y].setConnect(3, false);
+            {
+                if (pos.X > 0)
+                    state[pos.X - 1, pos.Y].setConnect(3, false);
+            }
             if (state[pos.X, pos.Y].getConnect(3))
-                state[pos.X + 1, pos.Y].setConnect(2, false);
-            if(resetConnectedOrNot)
+            {
+                if (pos.X < 5)
+                    state[pos.X + 1, pos.Y].setConnect(2, false);
+            }
+            if (resetConnectedOrNot)
                 state[pos.X, pos.Y].resetConnect();
         }
         private void reput(ref Block[,] state, Point ori, Point des)
@@ -354,8 +359,12 @@ namespace TwentyAI
                 return;
             reputlist.Add(ori);
 
+            if (des.X < 0 || des.X > 6 || ori.X < 0 || ori.X > 6) return;
+            if (des.Y < 0 || des.Y > 7 || ori.Y < 0 || ori.Y > 7) return;
+
+            //Debug.WriteLine("300: " + des.X + " " + des.Y + " " + ori.X + " " + ori.Y);
             if (state[des.X, des.Y].getNumber() == state[ori.X, ori.Y].getNumber())
-                merge(ref state, des, state[des.X, des.Y].getNumber()+1, true);
+                merge(ref state, des, state[des.X, des.Y].getNumber() + 1, true);
             else
                 state[des.X, des.Y] = new Block(state[ori.X, ori.Y]);
             if (state[ori.X, ori.Y].getConnect(0))
@@ -370,33 +379,42 @@ namespace TwentyAI
             state[ori.X, ori.Y].setNumber(0);
             state[ori.X, ori.Y].resetConnect();
         }
-       private bool fallable(ref Block[,] state, Point p)
+        private bool fallable(ref Block[,] state, Point p)
         {
             if (reputlist.Contains(p))
                 return true;
             reputlist.Add(p);
 
+            if (p.X < 0 || p.X > 6) return false;
+            if (p.Y < 0 || p.Y > 7) return false;
+
             bool r = true;
-            if(state[p.X, p.Y - 1].getNumber() != 0 && state[p.X, p.Y - 1].getNumber() != state[p.X, p.Y].getNumber())
+            if (state[p.X, p.Y - 1].getNumber() != 0 && state[p.X, p.Y - 1].getNumber() != state[p.X, p.Y].getNumber())
             {
                 if (state[p.X, p.Y].getConnect(1) == true)
                     r = true;
                 else
                     r = false;
             }
-            if ( (state[p.X, p.Y].getConnect(0) && fallable(ref state, new Point(p.X, p.Y + 1)) == false) ||
+            if ((state[p.X, p.Y].getConnect(0) && fallable(ref state, new Point(p.X, p.Y + 1)) == false) ||
                   (state[p.X, p.Y].getConnect(2) && fallable(ref state, new Point(p.X - 1, p.Y)) == false) ||
                   (state[p.X, p.Y].getConnect(3) && fallable(ref state, new Point(p.X + 1, p.Y)) == false))
                 r = false;
             return r;
         }
-        private void fall(ref Block[,] state, Point p)
+        private bool fall(ref Block[,] state, Point p)
         {
             if (reputlist.Contains(p))
-                return;
+                return true;
             reputlist.Add(p);
 
-            if(state[p.X, p.Y-1].getNumber() == state[p.X, p.Y].getNumber())
+            if(state[p.X, p.Y].getNumber() == 0)
+            {
+                //Debug.Write("ZERO \n");
+                return false;
+            }
+
+            if (state[p.X, p.Y - 1].getNumber() == state[p.X, p.Y].getNumber())
             {
                 merge(ref state, new Point(p.X, p.Y - 1), state[p.X, p.Y].getNumber() + 1, true);
                 merge(ref state, new Point(p.X, p.Y), 0, false);
@@ -409,13 +427,13 @@ namespace TwentyAI
                 else
                     state[p.X, p.Y].resetConnect();
             }
-            else if(state[p.X, p.Y - 1].getNumber() == 0)
+            else if (state[p.X, p.Y - 1].getNumber() == 0)
             {
                 if (state[p.X, p.Y].getConnect(2) == true)
                     fall(ref state, new Point(p.X - 1, p.Y));
                 if (state[p.X, p.Y].getConnect(3) == true)
                     fall(ref state, new Point(p.X + 1, p.Y));
-                state[p.X, p.Y-1] = new Block(state[p.X, p.Y]);
+                state[p.X, p.Y - 1] = new Block(state[p.X, p.Y]);
                 if (state[p.X, p.Y].getConnect(0) == true)
                     fall(ref state, new Point(p.X, p.Y + 1));
                 else
@@ -424,7 +442,7 @@ namespace TwentyAI
                     state[p.X, p.Y].setNumber(0);
                 }
             }
-            else if(state[p.X, p.Y].getConnect(1) == true)
+            else if (state[p.X, p.Y].getConnect(1) == true)
             {
                 state[p.X, p.Y - 1] = state[p.X, p.Y];
                 state[p.X, p.Y].setNumber(0);
@@ -432,15 +450,16 @@ namespace TwentyAI
             }
             else
             {
-                Debug.WriteLine("ERROR, not fallable!");
+                //Debug.WriteLine("ERROR, not fallable!");
             }
+            return true;
         }
         private void getCandidates(List<Point> blockList, ref List<List<Point>> candidateList, Block[,] state)
         {
             List<Point> temp = new List<Point>();
             for (int i = 0; i < blockList.Count; i++)
             {
-                for(int j = 0; j < blockList.Count; j++)
+                for (int j = 0; j < blockList.Count; j++)
                 {
                     if (i == j)
                         continue;
@@ -456,11 +475,11 @@ namespace TwentyAI
         }
         private void getTopPos(Block[,] state, ref int[] topPos)
         {
-            for(int i = 0; i < 7; i++)
+            for (int i = 0; i < 7; i++)
             {
-                for(int j = 0; j < 8; j++)
+                for (int j = 0; j < 8; j++)
                 {
-                    if(state[i, j].getNumber() == 0)
+                    if (state[i, j].getNumber() == 0)
                     {
                         topPos[i] = j;
                         break;

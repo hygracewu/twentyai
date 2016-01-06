@@ -25,10 +25,10 @@ namespace TwentyAI
         private void myHotKeyEvent()
         {
             //getCurrent();
-            //testGetSuccessors();
+            testGetSuccessors();
             //testUpdate();
             //testMovable();
-            moveBlock();
+            //moveBlock();
             //getCursorPosColor();
             //currentOutput();
         }
