@@ -138,18 +138,22 @@ namespace TwentyAI
             //方塊pair數少
             Dictionary<int, int> numberHashTable = new Dictionary<int, int>();
             int pairNum = 0;
+            int movablePairNum = 0;
             //可動方塊數多
             int jammedNum = 0;
             //最下層column數少一點
             int bottomNum = 0;
             //高度(最上面1~2層扣分)
-            int top7Num = 0;
-            int top8Num = 0;
+            int[] topNum = new int[8];
             //方塊個數少(?(不太重要
             int blockNum = 0;
             //最下層數字小一點(不太重要
             int bottomSum = 0;
 
+            List<Point>[] blockHash = new List<Point>[21];
+            for (int j = 0; j < 21; j++)
+                blockHash[j] = new List<Point>();
+            
             for (int i = 0; i < 7; i++)
             {
                 for (int j = 0; j < 8; j++)
@@ -166,24 +170,37 @@ namespace TwentyAI
                     {
                         numberHashTable.Add(state[i, j].getNumber(), 1);
                     }
+                    if (state[i, j].getJammed() == false)
+                        blockHash[state[i, j].getNumber()].Add(new Point(i, j));
                     //可動方塊數多
                     if (state[i, j].getJammed())
                         ++jammedNum;
                     //方塊個數少(?(不太重要
                     if (state[i, j].getNumber() != 0)
                         ++blockNum;
+                    //高度(最上面1~2層扣分)
+                    if (state[i, j].getNumber() != 0)
+                        ++topNum[j];
                 }
 
                 //最下層column數少一點
                 if (state[i, 0].getNumber() != 0)
                     ++bottomNum;
-                //高度(最上面1~2層扣分)
-                if (state[i, 6].getNumber() != 0)
-                    ++top7Num;
-                if (state[i, 7].getNumber() != 0)
-                    ++top8Num;
                 //最下層數字小一點(不太重要
                 bottomSum += state[i, 0].getNumber();
+            }
+
+            for (int i = 20; i >= 1; i--)
+            {
+                if (blockHash[i].Count > 1)
+                {
+                    List<List<Point>> candidateList = new List<List<Point>>();
+                    getCandidates(blockHash[i], ref candidateList, state);
+                    for (int j = 0; j < candidateList.Count; j++)
+                    {
+                        ++movablePairNum;
+                    }
+                }
             }
 
             totalConnect /= 2;
@@ -197,11 +214,16 @@ namespace TwentyAI
                         + pairNum * 100
                         + jammedNum * 10
                         + bottomNum * 30
-                        + top7Num * 50
-                        + top8Num * 500
+                        + topNum[6] * 50
+                        + topNum[7] * 500
                         + blockNum * 5
                         + bottomSum * 1
+                        + movablePairNum * 50
                         );
+            for (int i = 0; i < 6; ++i)
+            {
+                score += i * 5 * topNum[i];
+            }
 
             /*Debug.WriteLine("###" + score);
             Debug.WriteLine(totalConnect);// * 100

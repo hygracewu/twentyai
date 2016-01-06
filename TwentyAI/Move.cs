@@ -213,54 +213,60 @@ namespace TwentyAI
 
         private void moveBlock()
         {
-            getCurrent();
-            List<List<Point>> finalAction = new List<List<Point>>();
-            AStarSearch(ref finalAction, 100);
-
-            Debug.WriteLine("\nfinal count: " + finalAction.Count);
-            for (int i = 0; i < finalAction.Count; i++)
+            int iter = 0;
+            while (iter < 100)
             {
-                Debug.Write("=====");
-                Debug.WriteLine(i + ":" + finalAction[i][0] + " " + finalAction[i][1]);
-                
-                List<Point> route = new List<Point>();
                 getCurrent();
-                if (movable(Current, finalAction[i][0], finalAction[i][1], ref route))
+                List<List<Point>> finalAction = new List<List<Point>>();
+                AStarSearch(ref finalAction, 100);
+
+                Debug.WriteLine("\nfinal count: " + finalAction.Count);
+                for (int i = 0; i < finalAction.Count; i++)
                 {
-                    DragAlongRoute(ref route);
-                    Thread.Sleep(240);
-                }
-                else
-                {
-                    Debug.WriteLine("ERROR!!!!");
-                    string oo = "";
-                    for (int ii = 8 - 1; ii >= 0; ii--)
+                    Debug.Write("=====");
+                    Debug.WriteLine(i + ":" + finalAction[i][0] + " " + finalAction[i][1]);
+
+                    List<Point> route = new List<Point>();
+                    getCurrent();
+                    if (movable(Current, finalAction[i][0], finalAction[i][1], ref route))
                     {
-                        for (int j = 0; j < 7; j++)
-                        {
-                            oo += Current[j, ii].getNumber().ToString("00");
-                            if (Current[j, ii].getConnect(3))
-                                oo += "--";
-                            else
-                                oo += "  ";
-                        }
-                        oo += "\n";
-                        for (int j = 0; j < 7; j++)
-                        {
-                            if (Current[j, ii].getConnect(1))
-                                oo += "|";
-                            else
-                                oo += " ";
-                            oo += "   ";
-                        }
-                        oo += "\n";
+                        DragAlongRoute(ref route);
+                        Thread.Sleep(240);
                     }
-                    oo += "\n";
-                    Debug.Write(oo);
-                    break;
+                    else
+                    {
+                        Debug.WriteLine("ERROR!!!!");
+                        string oo = "";
+                        for (int ii = 8 - 1; ii >= 0; ii--)
+                        {
+                            for (int j = 0; j < 7; j++)
+                            {
+                                oo += Current[j, ii].getNumber().ToString("00");
+                                if (Current[j, ii].getConnect(3))
+                                    oo += "--";
+                                else
+                                    oo += "  ";
+                            }
+                            oo += "\n";
+                            for (int j = 0; j < 7; j++)
+                            {
+                                if (Current[j, ii].getConnect(1))
+                                    oo += "|";
+                                else
+                                    oo += " ";
+                                oo += "   ";
+                            }
+                            oo += "\n";
+                        }
+                        oo += "\n";
+                        Debug.Write(oo);
+                        break;
+                    }
                 }
+                currentOutput();
+                ++iter;
+                Thread.Sleep(1000);
             }
-            currentOutput();
         }
 
         static Point s, d;

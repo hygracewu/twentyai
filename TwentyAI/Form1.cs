@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-using System.Threading;
 
 namespace TwentyAI
 {
@@ -29,15 +28,8 @@ namespace TwentyAI
             //testGetSuccessors();
             //testUpdate();
             //testMovable();
-            /*int i = 0;
-            while (i<100)
-            {
-                moveBlock();
-                Thread.Sleep(1000);
-                ++i;
-            }*/
-            //moveBlock();
-            getCursorPosColor();
+            moveBlock();
+            //getCursorPosColor();
         }
 
     }
