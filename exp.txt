@@ -1,0 +1,69 @@
+==exp1: 16
+==exp2: 20*1
+==exp3: 20*1
+int score = (
+                        + totalConnect * 800
+                        //+ pairNum * 100
+                        + jammedNum * 700
+                        + bottomNum * 30
+                        + topNum[6] * 50
+                        + topNum[7] * 5000
+                        + blockNum * 1000
+                        + bottomSum * 1
+                        - movablePairNum * 100
+                        + blockSum * 50
+                        );
+            for (int i = 0; i < 6; ++i)
+            {
+                score += i * 5 * topNum[i];
+            }
+
+
+==exp4: 19
+==exp5: 20*3
+==exp5: 20*3
+int score = (
+                        + totalConnect * 800
+                        //+ pairNum * 100
+                        + jammedNum * 700
+                        + bottomNum * 30
+                        + topNum[6] * 200
+                        + topNum[7] * 5000
+                        + blockNum * 1000
+                        + bottomSum * 1
+                        - movablePairNum * 100
+                        + blockSum * 50
+                        );
+            for (int i = 0; i < 6; ++i)
+            {
+                score += i * 10 * topNum[i];
+            }
+
+(手速45)
+==exp7: 20*2
+==exp8: 19
+==exp9: 20*3
+int score = (
+                        + totalConnect * 800
+                        //+ pairNum * 100
+                        + jammedNum * 700
+                        + bottomNum * 30
+                        + topNum[6] * 200
+                        + topNum[7] * 5000
+                        + blockNum * 1000
+                        + bottomSum * 1
+                        - movablePairNum * 100
+                        + blockSum * 50
+                        );
+            for (int i = 0; i < 6; ++i)
+            {
+                score += i * 10 * topNum[i];
+            }
+
+==exp10_dfs: 10
+==exp11_dfs: 10
+==exp12_dfs: 10
+
+==exp13_bfs: 17
+==exp14_bfs: 14
+==exp15_bfs: 17
