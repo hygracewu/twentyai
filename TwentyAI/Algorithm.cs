@@ -150,6 +150,8 @@ namespace TwentyAI
             //最下層數字小一點(不太重要
             int bottomSum = 0;
 
+            int blockSum = 0;
+
             List<Point>[] blockHash = new List<Point>[21];
             for (int j = 0; j < 21; j++)
                 blockHash[j] = new List<Point>();
@@ -181,6 +183,8 @@ namespace TwentyAI
                     //高度(最上面1~2層扣分)
                     if (state[i, j].getNumber() != 0)
                         ++topNum[j];
+
+                    blockSum += state[i, j].getNumber();
                 }
 
                 //最下層column數少一點
@@ -210,15 +214,16 @@ namespace TwentyAI
 
             //算分數(爛度(越大越爛
             int score = (
-                        + totalConnect * 100
-                        + pairNum * 100
+                        + totalConnect * 200
+                        //+ pairNum * 100
                         + jammedNum * 10
                         + bottomNum * 30
                         + topNum[6] * 50
                         + topNum[7] * 500
-                        + blockNum * 5
+                        + blockNum * 1000
                         + bottomSum * 1
-                        + movablePairNum * 50
+                        - movablePairNum * 100
+                        + blockSum * 50
                         );
             for (int i = 0; i < 6; ++i)
             {
