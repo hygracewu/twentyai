@@ -121,6 +121,11 @@ namespace TwentyAI
                         if (now.Y < 7 && state[start.X, start.Y].getNumber() == state[now.X, now.Y + 1].getNumber())
                             r = true;
                     }
+                    if (state[start.X, start.Y].getConnect(1) == true)
+                    {
+                        if (reachable(state, new Point(now.X, now.Y - 1), new Point(start.X, start.Y - 1), dest, 0) == false)
+                            r = false;
+                    }
                     if (state[start.X, start.Y].getConnect(2) == true)
                     {
                         if (reachable(state, new Point(now.X - 1, now.Y), new Point(start.X - 1, start.Y), dest, 0) == false)
@@ -144,6 +149,11 @@ namespace TwentyAI
                             r = false;
                         if (now.Y > 0 && state[start.X, start.Y].getNumber() == state[now.X, now.Y - 1].getNumber())
                             r = true;
+                    }
+                    if (state[start.X, start.Y].getConnect(0) == true)
+                    {
+                        if (reachable(state, new Point(now.X, now.Y + 1), new Point(start.X, start.Y + 1), dest, 1) == false)
+                            r = false;
                     }
                     if (state[start.X, start.Y].getConnect(2) == true)
                     {
@@ -169,6 +179,11 @@ namespace TwentyAI
                         if (now.X > 0 && state[start.X, start.Y].getNumber() == state[now.X - 1, now.Y].getNumber())
                             r = true;
                     }
+                    if (state[start.X, start.Y].getConnect(3) == true)
+                    {
+                        if (reachable(state, new Point(now.X + 1, now.Y), new Point(start.X + 1, start.Y), dest, 2) == false)
+                            r = false;
+                    }
                     if (state[start.X, start.Y].getConnect(0) == true)
                     {
                         if (reachable(state, new Point(now.X, now.Y + 1), new Point(start.X, start.Y + 1), dest, 2) == false)
@@ -192,6 +207,11 @@ namespace TwentyAI
                             r = false;
                         if (now.X < 6 && state[start.X, start.Y].getNumber() == state[now.X + 1, now.Y].getNumber())
                             r = true;
+                    }
+                    if (state[start.X, start.Y].getConnect(2) == true)
+                    {
+                        if (reachable(state, new Point(now.X - 1, now.Y), new Point(start.X - 1, start.Y), dest, 3) == false)
+                            r = false;
                     }
                     if (state[start.X, start.Y].getConnect(0) == true)
                     {
@@ -353,27 +373,29 @@ namespace TwentyAI
         }
     }
 }
-/*string oo = "";
-for (int ii = 8 - 1; ii >= 0; ii--)
-{
-    for (int j = 0; j < 7; j++)
-    {
-        oo += Current[j, ii].getNumber().ToString("00");
-        if (Current[j, ii].getConnect(3))
-            oo += "--";
-        else
-            oo += "  ";
-    }
-    oo += "\n";
-    for (int j = 0; j < 7; j++)
-    {
-        if (Current[j, i].getConnect(1))
-            oo += "|";
-        else
-            oo += " ";
-        oo += "   ";
-    }
-    oo += "\n";
-}
-oo += "\n";
-Debug.Write(oo);*/
+/*
+string oo = "";
+                                for (int ii = 8 - 1; ii >= 0; ii--)
+                                {
+                                    for (int jj = 0; jj < 7; jj++)
+                                    {
+                                        oo += Current[jj, ii].getNumber().ToString("00");
+                                        if (Current[jj, ii].getConnect(3))
+                                            oo += "--";
+                                        else
+                                            oo += "  ";
+                                    }
+                                    oo += "\n";
+                                    for (int jj = 0; jj < 7; jj++)
+                                    {
+                                        if (Current[jj, ii].getConnect(1))
+                                            oo += "|";
+                                        else
+                                            oo += " ";
+                                        oo += "   ";
+                                    }
+                                    oo += "\n";
+                                }
+                                oo += "\n";
+                                Debug.Write(oo);
+*/

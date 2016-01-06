@@ -29,15 +29,15 @@ namespace TwentyAI
             //testGetSuccessors();
             //testUpdate();
             //testMovable();
-            /*int i = 0;
+            int i = 0;
             while (i<100)
             {
                 moveBlock();
                 Thread.Sleep(1000);
                 ++i;
-            }*/
+            }
             //moveBlock();
-            getCursorPosColor();
+            //getCursorPosColor();
         }
 
     }
