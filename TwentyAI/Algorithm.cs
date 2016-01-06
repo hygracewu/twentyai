@@ -198,7 +198,7 @@ namespace TwentyAI
                         + jammedNum * 10
                         + bottomNum * 30
                         + top7Num * 50
-                        + top8Num * 300
+                        + top8Num * 500
                         + blockNum * 5
                         + bottomSum * 1
                         );

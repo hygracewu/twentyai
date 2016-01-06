@@ -223,11 +223,11 @@ namespace TwentyAI
                 Debug.Write("=====");
                 Debug.WriteLine(i + ":" + finalAction[i][0] + " " + finalAction[i][1]);
                 
-                 List<Point> route = new List<Point>();
+                List<Point> route = new List<Point>();
                 getCurrent();
                 if (movable(Current, finalAction[i][0], finalAction[i][1], ref route))
-                 {
-                     DragAlongRoute(ref route);
+                {
+                    DragAlongRoute(ref route);
                     Thread.Sleep(240);
                 }
                 else
@@ -247,7 +247,7 @@ namespace TwentyAI
                         oo += "\n";
                         for (int j = 0; j < 7; j++)
                         {
-                            if (Current[j, i].getConnect(1))
+                            if (Current[j, ii].getConnect(1))
                                 oo += "|";
                             else
                                 oo += " ";
