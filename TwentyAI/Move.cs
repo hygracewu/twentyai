@@ -215,7 +215,7 @@ namespace TwentyAI
         {
             getCurrent();
             List<List<Point>> finalAction = new List<List<Point>>();
-            AStarSearch(ref finalAction, 5);
+            AStarSearch(ref finalAction, 100);
 
             Debug.WriteLine("\nfinal count: " + finalAction.Count);
             for (int i = 0; i < finalAction.Count; i++)
@@ -224,13 +224,41 @@ namespace TwentyAI
                 Debug.WriteLine(i + ":" + finalAction[i][0] + " " + finalAction[i][1]);
                 
                  List<Point> route = new List<Point>();
-                 if (movable(Current, finalAction[i][0], finalAction[i][1], ref route))
+                getCurrent();
+                if (movable(Current, finalAction[i][0], finalAction[i][1], ref route))
                  {
                      DragAlongRoute(ref route);
-                 }
-                 else
-                     Debug.WriteLine("ERROR!!!!");
-                 getCurrent();
+                    Thread.Sleep(240);
+                }
+                else
+                {
+                    Debug.WriteLine("ERROR!!!!");
+                    string oo = "";
+                    for (int ii = 8 - 1; ii >= 0; ii--)
+                    {
+                        for (int j = 0; j < 7; j++)
+                        {
+                            oo += Current[j, ii].getNumber().ToString("00");
+                            if (Current[j, ii].getConnect(3))
+                                oo += "--";
+                            else
+                                oo += "  ";
+                        }
+                        oo += "\n";
+                        for (int j = 0; j < 7; j++)
+                        {
+                            if (Current[j, i].getConnect(1))
+                                oo += "|";
+                            else
+                                oo += " ";
+                            oo += "   ";
+                        }
+                        oo += "\n";
+                    }
+                    oo += "\n";
+                    Debug.Write(oo);
+                    break;
+                }
             }
             currentOutput();
         }

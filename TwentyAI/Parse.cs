@@ -14,7 +14,8 @@ namespace TwentyAI
 
         private void initCurrent()
         {
-            int initX = 700, initY = 860, dx = 80, dy = 84;
+            //int initX = 700, initY = 860, dx = 80, dy = 84;
+            int initX = 700, initY = 820, dx = 80, dy = 84;
             for (int i = 0; i < 7; i++)
             {
                 for (int j = 0; j < 8; j++)
@@ -49,7 +50,7 @@ namespace TwentyAI
         private void getCurrent()
         {
             graphics.CopyFromScreen(0, 0, 0, 0, new Size(1920, 1080));
-            for (int j = 0; j < 8; j++)
+            for (int j = 7; j >= 0; j--)
             {
                 for (int i = 0; i < 7; i++)
                 {

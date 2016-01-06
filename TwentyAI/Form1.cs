@@ -24,13 +24,12 @@ namespace TwentyAI
 
         private void myHotKeyEvent()
         {
-            //getCurrent();
+            //getCurrent();currentOutput();
             //testGetSuccessors();
             //testUpdate();
             //testMovable();
             moveBlock();
             //getCursorPosColor();
-            //currentOutput();
         }
 
     }

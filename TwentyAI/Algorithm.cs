@@ -91,15 +91,15 @@ namespace TwentyAI
             }
 
             updateJammed2(ref leafNode);
-            int[] topPos = new int[7];
-            getTopPos(leafNode, ref topPos);
+            int[] topPos = new int[7] { 7, 7, 7, 7, 7, 7, 7};
+            //getTopPos(leafNode, ref topPos);
             for (int i = 20; i >= 1; i--)
             {
                 if (blockHash[i].Count > 0)
                 {
                     for (int j = 0; j < blockHash[i].Count; j++)
                     {
-                        for (int k = 0; k < 7; k++)
+                        for (int k = 0; k < 7; k+=2)
                         {
                             if (blockHash[i][j].X == k)
                                 continue;
@@ -203,7 +203,7 @@ namespace TwentyAI
                         + bottomSum * 1
                         );
 
-            Debug.WriteLine("###" + score);
+            /*Debug.WriteLine("###" + score);
             Debug.WriteLine(totalConnect);// * 100
             Debug.WriteLine(pairNum);// * 50
             Debug.WriteLine(jammedNum);// * 10
@@ -212,6 +212,7 @@ namespace TwentyAI
             Debug.WriteLine(top8Num);// * 10000
             Debug.WriteLine(blockNum);// * 5
             Debug.WriteLine(bottomSum);// * 3
+            */
 
             return score;
         }
