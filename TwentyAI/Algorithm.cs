@@ -99,7 +99,7 @@ namespace TwentyAI
                 {
                     for (int j = 0; j < blockHash[i].Count; j++)
                     {
-                        if (blockHash[i][j].X % 2 == 1)
+                        if (blockHash[i][j].X % 2 == 0)
                             continue;
                         for (int k = 0; k < 7; k+=2)
                         {
