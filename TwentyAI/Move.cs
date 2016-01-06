@@ -233,12 +233,10 @@ namespace TwentyAI
 
         private void moveBlock(int option)
         {
-            getCurrent();
-            currentOutput();
-
             while (true)
             {
                 getCurrent();
+                currentOutput();
                 List<List<Point>> finalAction = new List<List<Point>>();
                 if (option == 0)
                     AStarSearch(ref finalAction, 100);

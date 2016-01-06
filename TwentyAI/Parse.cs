@@ -158,29 +158,37 @@ namespace TwentyAI
 
         private void currentOutput()
         {
-            string oo = "";
-            for (int i = 8-1; i >= 0; i--)
+            if(this.InvokeRequired)
             {
-                for (int j = 0; j < 7; j++)
-                {
-                    oo += Current[j, i].getNumber().ToString("00") ;
-                    if (Current[j, i].getConnect(3))
-                        oo += "--";
-                    else
-                        oo += "   ";
-                }
-                oo += "\n";
-                for (int j = 0; j < 7; j++)
-                {
-                    if (Current[j, i].getConnect(1))
-                        oo += " |";
-                    else
-                        oo += "  ";
-                    oo += "     ";
-                }
-                oo += "\n";
+                getUI abc = new getUI(currentOutput);
+                this.Invoke(abc);
             }
-            this.ooo.Text = oo;
+            else
+            {
+                string oo = "";
+                for (int i = 8 - 1; i >= 0; i--)
+                {
+                    for (int j = 0; j < 7; j++)
+                    {
+                        oo += Current[j, i].getNumber().ToString("00");
+                        if (Current[j, i].getConnect(3))
+                            oo += "--";
+                        else
+                            oo += "   ";
+                    }
+                    oo += "\n";
+                    for (int j = 0; j < 7; j++)
+                    {
+                        if (Current[j, i].getConnect(1))
+                            oo += " |";
+                        else
+                            oo += "  ";
+                        oo += "     ";
+                    }
+                    oo += "\n";
+                }
+                this.ooo.Text = oo;
+            }
         }
 
         private Color[] standardColor = new Color[20];

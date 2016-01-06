@@ -142,11 +142,11 @@ namespace TwentyAI
             route.RemoveAt(0);
             while (route.Count != 0)
             {
-                Thread.Sleep(30);
+                Thread.Sleep(45);
                 Cursor.Position = cursorPosition[route[0].X, route[0].Y];
                 route.RemoveAt(0);
             }
-            Thread.Sleep(30);
+            Thread.Sleep(45);
             LeftUp();
             Thread.Sleep(200);
         }
