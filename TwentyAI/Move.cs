@@ -231,175 +231,37 @@ namespace TwentyAI
             return r;
         }
 
-        private void moveBlock()
+        private void moveBlock(int option)
         {
+            getCurrent();
+            currentOutput();
+
             while (true)
             {
                 getCurrent();
                 List<List<Point>> finalAction = new List<List<Point>>();
-                AStarSearch(ref finalAction, 100);
-
-                //Debug.WriteLine("\nfinal count: " + finalAction.Count);
+                if (option == 0)
+                    AStarSearch(ref finalAction, 100);
+                else if (option == 1)
+                    BreadthFirstSearch(ref finalAction, 100);
+                else
+                    DepthFirstSearch(ref finalAction, 100);
+                
                 for (int i = 0; i < finalAction.Count; i++)
                 {
-                    //Debug.Write("=====");
-                    //Debug.WriteLine(i + ":" + finalAction[i][0] + " " + finalAction[i][1]);
-
                     List<Point> route = new List<Point>();
                     getCurrent();
                     if (movable(Current, finalAction[i][0], finalAction[i][1], ref route))
                     {
                         DragAlongRoute(ref route);
-                        Thread.Sleep(240);
+                        Thread.Sleep(300);
                     }
                     else
-                    {
-                        /*Debug.WriteLine("ERROR!!!!");
-                        string oo = "";
-                        for (int ii = 8 - 1; ii >= 0; ii--)
-                        {
-                            for (int j = 0; j < 7; j++)
-                            {
-                                oo += Current[j, ii].getNumber().ToString("00");
-                                if (Current[j, ii].getConnect(3))
-                                    oo += "--";
-                                else
-                                    oo += "  ";
-                            }
-                            oo += "\n";
-                            for (int j = 0; j < 7; j++)
-                            {
-                                if (Current[j, ii].getConnect(1))
-                                    oo += "|";
-                                else
-                                    oo += " ";
-                                oo += "   ";
-                            }
-                            oo += "\n";
-                        }
-                        oo += "\n";
-                        Debug.Write(oo);*/
                         break;
-                    }
                 }
-                //currentOutput();
                 Thread.Sleep(500);
             }
         }
-
-        static Point s, d;
-        List<Point> r;
-        private void testMovable()
-        {
-            s.X = Convert.ToInt32(this.startX.Text);
-            s.Y = Convert.ToInt32(this.startY.Text);
-            d.X = Convert.ToInt32(this.destX.Text);
-            d.Y = Convert.ToInt32(this.destY.Text);
-
-            this.sn.Text = Convert.ToString(Current[s.X, s.Y].getNumber());
-            this.dn.Text = Convert.ToString(Current[d.X, d.Y].getNumber());
-            Debug.WriteLine(s);
-            Debug.WriteLine(d);
-
-            bool m = movable(Current, s, d, ref r);
-
-            if (m)
-            {
-                this.textMovable.Text = "True";
-                Debug.Write("Route: ");
-                for (int i = 0; i < r.Count; i++)
-                {
-                    Debug.Write(r[i] + " ");
-                }
-                Debug.Write("\n");
-            }
-            else
-                this.textMovable.Text = "False";
-        }
-
-        private void testUpdate()
-        {
-            s.X = Convert.ToInt32(this.startX.Text);
-            s.Y = Convert.ToInt32(this.startY.Text);
-            d.X = Convert.ToInt32(this.destX.Text);
-            d.Y = Convert.ToInt32(this.destY.Text);
-            List<Point> test = new List<Point>();
-            test.Add(s);
-            test.Add(d);
-
-            Block[,] testResult = new Block[7, 8];
-            update(Current, test, ref testResult);
-            Current = testResult;
-            Debug.WriteLine("*******************************");
-
-            currentOutput();
-        }
-        private void testGetSuccessors()
-        {
-            getCurrent();
-            List<List<Point>> a = new List<List<Point>>();
-            List<Block[,]> l = new List<Block[,]>();
-            getSuccessors(ref a, ref l, Current);
-            Debug.WriteLine("Count: " + l.Count);
-            for (int q = 0; q < a.Count; q++)
-            {
-                for (int w = 0; w < 2; w++)
-                {
-                    Debug.Write(a[q][w] + " ");
-                }
-                Debug.Write("\n");
-
-                /*string oo = "";
-                for (int i = 8 - 1; i >= 0; i--)
-                {
-                    for (int j = 0; j < 7; j++)
-                    {
-                        oo += l[q][j, i].getNumber().ToString("00");
-                        if (l[q][j, i].getConnect(3))
-                            oo += "--";
-                        else
-                            oo += "  ";
-                    }
-                    oo += "\n";
-                    for (int j = 0; j < 7; j++)
-                    {
-                        if (l[q][j, i].getConnect(1))
-                            oo += "|";
-                        else
-                            oo += " ";
-                        oo += "   ";
-                    }
-                    oo += "\n";
-                }
-                Debug.Write(oo);
-                Debug.Write("\n");*/
-            }
-        }
+        
     }
 }
-/*
-string oo = "";
-                                for (int ii = 8 - 1; ii >= 0; ii--)
-                                {
-                                    for (int jj = 0; jj < 7; jj++)
-                                    {
-                                        oo += Current[jj, ii].getNumber().ToString("00");
-                                        if (Current[jj, ii].getConnect(3))
-                                            oo += "--";
-                                        else
-                                            oo += "  ";
-                                    }
-                                    oo += "\n";
-                                    for (int jj = 0; jj < 7; jj++)
-                                    {
-                                        if (Current[jj, ii].getConnect(1))
-                                            oo += "|";
-                                        else
-                                            oo += " ";
-                                        oo += "   ";
-                                    }
-                                    oo += "\n";
-                                }
-                                oo += "\n";
-                                Debug.Write(oo);
-*/

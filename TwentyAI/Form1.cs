@@ -21,17 +21,26 @@ namespace TwentyAI
         {
             unregisterHotKey();
         }
-
+        
         private void myHotKeyEvent()
         {
-            //getCurrent();currentOutput();
-            //testGetSuccessors();
-            //testUpdate();
-            //testMovable();
-            moveBlock();
-            //getCursorPosColor();
+            //0: A*
+            //1: BFS
+            //2: DFS
+            moveBlock(0);
         }
-
+        /*private void UI(ref string a)
+        {
+            if (this.InvokeRequired)
+            {
+                getUI abc = new getUI(UI, new object[] { a});
+                this.Invoke(abc);
+                a = "asd";
+            }
+            else
+                a = this.comboBox1.Text;
+        }
+        private delegate string getUI(ref string a);*/
     }
 }
 

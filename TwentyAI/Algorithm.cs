@@ -9,6 +9,96 @@ namespace TwentyAI
 {
     public partial class Form1 : Form
     {
+        private void DepthFirstSearch(ref List<List<Point>> finalActionList, int depth)
+        {
+            Stack frontier = new Stack();
+            frontier.Push(Current);
+            List<Block[,]> explored = new List<Block[,]>();
+            List<List<Point>> actionList = new List<List<Point>>();
+            Dictionary<Block[,], List<List<Point>>> transitionTable = new Dictionary<Block[,], List<List<Point>>>();
+            Block[,] leafNode = new Block[7, 8];
+            while (frontier.Count != 0 && depth > 0)
+            {
+                depth -= 1;
+                leafNode = (Block[,])frontier.Pop();
+                if (transitionTable.ContainsKey(leafNode))
+                {
+                    actionList = new List<List<Point>>(transitionTable[leafNode]);
+                }
+                if (isGoal(leafNode))
+                {
+                    finalActionList = actionList;
+                    return;
+                }
+                explored.Add(leafNode);
+                List<List<Point>> actions = new List<List<Point>>();
+                List<Block[,]> leaves = new List<Block[,]>();
+                getSuccessors(ref actions, ref leaves, leafNode);
+
+                while (leaves.Count != 0)
+                {
+                    Block[,] leaf = leaves[0];
+                    leaves.RemoveAt(0);
+                    List<Point> leafAction = actions[0];
+                    actions.RemoveAt(0);
+                    List<List<Point>> leafActionList = new List<List<Point>>(actionList);
+                    leafActionList.Add(leafAction);
+                    if (explored.Contains(leaf) == false && frontier.Contains(leaf) == false)
+                    {
+                        frontier.Push(leaf);
+                        transitionTable.Add(leaf, leafActionList);
+                    }
+                    leaves.Remove(leaf);
+                }
+            }
+            finalActionList = actionList;
+            return;
+        }
+        private void BreadthFirstSearch(ref List<List<Point>> finalActionList, int depth)
+        {
+            Queue frontier = new Queue();
+            frontier.Enqueue(Current);
+            List<Block[,]> explored = new List<Block[,]>();
+            List<List<Point>> actionList = new List<List<Point>>();
+            Dictionary<Block[,], List<List<Point>>> transitionTable = new Dictionary<Block[,], List<List<Point>>>();
+            Block[,] leafNode = new Block[7, 8];
+            while (frontier.Count != 0 && depth > 0)
+            {
+                depth -= 1;
+                leafNode = (Block[,])frontier.Dequeue();
+                if (transitionTable.ContainsKey(leafNode))
+                {
+                    actionList = new List<List<Point>>(transitionTable[leafNode]);
+                }
+                if (isGoal(leafNode))
+                {
+                    finalActionList = actionList;
+                    return;
+                }
+                explored.Add(leafNode);
+                List<List<Point>> actions = new List<List<Point>>();
+                List<Block[,]> leaves = new List<Block[,]>();
+                getSuccessors(ref actions, ref leaves, leafNode);
+
+                while (leaves.Count != 0)
+                {
+                    Block[,] leaf = leaves[0];
+                    leaves.RemoveAt(0);
+                    List<Point> leafAction = actions[0];
+                    actions.RemoveAt(0);
+                    List<List<Point>> leafActionList = new List<List<Point>>(actionList);
+                    leafActionList.Add(leafAction);
+                    if (explored.Contains(leaf) == false && frontier.Contains(leaf) == false)
+                    {
+                        frontier.Enqueue(leaf);
+                        transitionTable.Add(leaf, leafActionList);
+                    }
+                    leaves.Remove(leaf);
+                }
+            }
+            finalActionList = actionList;
+            return;
+        }
         private void AStarSearch(ref List<List<Point>> finalActionList, int depth)
         {
             PriorityQueue<Block[,]> frontier = new PriorityQueue<Block[,]>();
@@ -19,7 +109,6 @@ namespace TwentyAI
             Block[,] leafNode = new Block[7, 8];
             while (frontier.Count() != 0 && depth > 0)
             {
-                //Debug.WriteLine("depth: " + depth);
                 depth -= 1;
                 leafNode = frontier.Pop();
                 if (transitionTable.ContainsKey(leafNode))
@@ -35,18 +124,15 @@ namespace TwentyAI
                 List<List<Point>> actions = new List<List<Point>>();
                 List<Block[,]> leaves = new List<Block[,]>();
                 getSuccessors(ref actions, ref leaves, leafNode);
-
-                //Debug.WriteLine("leaves count: " + leaves.Count);
+                
                 while (leaves.Count != 0)
                 {
                     Block[,] leaf = leaves[0];
                     leaves.RemoveAt(0);
                     List<Point> leafAction = actions[0];
-                    //Debug.WriteLine("leafAction: " + leafAction[0] + " " + leafAction[leafAction.Count-1]);
                     actions.RemoveAt(0);
                     List<List<Point>> leafActionList = new List<List<Point>>(actionList);
                     leafActionList.Add(leafAction);
-                    //Debug.WriteLine("-----" + leafActionList.Count);
                     int leafCost = evaluationFunction(leaf) + heuristic(leafAction);
                     if (explored.Contains(leaf) == false && frontier.Contains(leaf) == false)
                     {
@@ -94,7 +180,6 @@ namespace TwentyAI
 
             updateJammed2(ref leafNode);
             int[] topPos = new int[7] { 7, 7, 7, 7, 7, 7, 7};
-            //getTopPos(leafNode, ref topPos);
             for (int i = 20; i >= 1; i--)
             {
                 if (blockHash[i].Count > 0)
@@ -218,10 +303,10 @@ namespace TwentyAI
             int score = (
                         + totalConnect * 800
                         //+ pairNum * 100
-                        + jammedNum * 10
+                        + jammedNum * 700
                         + bottomNum * 30
                         + topNum[6] * 50
-                        + topNum[7] * 500
+                        + topNum[7] * 5000
                         + blockNum * 1000
                         + bottomSum * 1
                         - movablePairNum * 100
