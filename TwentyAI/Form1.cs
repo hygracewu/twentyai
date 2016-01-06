@@ -25,13 +25,17 @@ namespace TwentyAI
         private string option = " ";
         private void myHotKeyEvent()
         {
-            getOption();
+            getCurrent();
+            currentOutput();
+            /*getOption();
             if (option == "AStar")
                 moveBlock(0);
             else if (option == "BFS")
                 moveBlock(1);
             else if (option == "DFS")
                 moveBlock(2);
+            else { }
+            */
         }
         private void getOption()
         {

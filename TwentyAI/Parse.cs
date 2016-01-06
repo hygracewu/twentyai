@@ -174,16 +174,16 @@ namespace TwentyAI
                         if (Current[j, i].getConnect(3))
                             oo += "--";
                         else
-                            oo += "   ";
+                            oo += "  ";
                     }
                     oo += "\n";
                     for (int j = 0; j < 7; j++)
                     {
                         if (Current[j, i].getConnect(1))
-                            oo += " |";
+                            oo += "  |";
                         else
                             oo += "  ";
-                        oo += "     ";
+                        oo += "   ";
                     }
                     oo += "\n";
                 }
