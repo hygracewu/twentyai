@@ -128,7 +128,7 @@ namespace TwentyAI
         }
         private int heuristic(List<Point> action)
         {
-            return Math.Abs( (action[0].X - action[1].X) + (action[0].Y - action[0].Y) );
+            return Math.Abs(action[0].X - action[1].X) + Math.Abs(action[0].Y - action[0].Y);
         }
         private int evaluationFunction(Block[,] state)
         {
