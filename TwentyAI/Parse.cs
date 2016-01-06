@@ -103,6 +103,28 @@ namespace TwentyAI
             }
             return true;
         }
+        private bool decideJammed2(ref Block[,] state, int x, int y)
+        {
+            //up
+            if (y < 7)
+            {
+                if (state[x, y + 1].getNumber() == 0)
+                    return false;
+            }
+            //left
+            if (x > 0)
+            {
+                if (state[x - 1, y].getNumber() == 0)
+                    return false;
+            }
+            //right
+            if (x < 6)
+            {
+                if (state[x + 1, y].getNumber() == 0)
+                    return false;
+            }
+            return true;
+        }
         private void updateJammed(ref Block[,] state)
         {
             for (int j = 0; j < 8; j++)
@@ -110,6 +132,16 @@ namespace TwentyAI
                 for (int i = 0; i < 7; i++)
                 {
                     state[i, j].setJammed(decideJammed(ref state, i, j));
+                }
+            }
+        }
+        private void updateJammed2(ref Block[,] state)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                for (int i = 0; i < 7; i++)
+                {
+                    state[i, j].setJammed(decideJammed2(ref state, i, j));
                 }
             }
         }

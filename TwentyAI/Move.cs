@@ -210,22 +210,22 @@ namespace TwentyAI
         {
             getCurrent();
             List<List<Point>> finalAction = new List<List<Point>>();
-            AStarSearch(ref finalAction, 2);
+            AStarSearch(ref finalAction, 100);
 
             Debug.WriteLine("\nfinal count: " + finalAction.Count);
             for (int i = 0; i < finalAction.Count; i++)
             {
                 Debug.Write("=====");
                 Debug.WriteLine(i + ":" + finalAction[i][0] + " " + finalAction[i][1]);
-
-                List<Point> route = new List<Point>();
-                if (movable(Current, finalAction[i][0], finalAction[i][1], ref route))
-                {
-                    DragAlongRoute(ref route);
-                }
-                else
-                    Debug.WriteLine("ERROR!!!!");
-                getCurrent();
+                
+                 List<Point> route = new List<Point>();
+                 if (movable(Current, finalAction[i][0], finalAction[i][1], ref route))
+                 {
+                     DragAlongRoute(ref route);
+                 }
+                 else
+                     Debug.WriteLine("ERROR!!!!");
+                 getCurrent();
             }
             currentOutput();
         }

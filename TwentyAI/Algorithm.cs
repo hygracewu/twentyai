@@ -90,6 +90,7 @@ namespace TwentyAI
                 }
             }*/
 
+            updateJammed2(ref leafNode);
             int[] topPos = new int[7];
             getTopPos(leafNode, ref topPos);
             for (int i = 20; i >= 1; i--)
@@ -225,6 +226,8 @@ namespace TwentyAI
             {
                 for (int j = 0; j < 8; j++)
                 {
+                    if (node[i, j].getNumber() == 0)
+                        continue;
                     if (numberHashTable.ContainsKey(node[i, j].getNumber()))
                         return false;
                     else
