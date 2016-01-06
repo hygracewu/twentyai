@@ -22,6 +22,7 @@ namespace TwentyAI
             unregisterHotKey();
         }
         
+        private string option = " ";
         private void myHotKeyEvent()
         {
             //0: A*
@@ -29,18 +30,19 @@ namespace TwentyAI
             //2: DFS
             moveBlock(1);
         }
-        /*private void UI(ref string a)
+        private void getOption()
         {
             if (this.InvokeRequired)
             {
-                getUI abc = new getUI(UI, new object[] { a});
+                getUI abc = new getUI(getOption);
                 this.Invoke(abc);
-                a = "asd";
             }
             else
-                a = this.comboBox1.Text;
+            {
+                option = comboBox1.Text;
+            }
         }
-        private delegate string getUI(ref string a);*/
+        private delegate void getUI();
     }
 }
 

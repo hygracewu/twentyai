@@ -69,8 +69,9 @@
             this.comboBox1.Font = new System.Drawing.Font("新細明體", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
+            "AStar",
             "BFS",
-            "AStar"});
+            "DFS"});
             this.comboBox1.Location = new System.Drawing.Point(56, 60);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 30);
@@ -80,11 +81,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(471, 668);
+            this.ClientSize = new System.Drawing.Size(350, 516);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.searchMethod);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ooo);
+            this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Name = "Form1";
             this.Text = "TwentySolver";
             this.TopMost = true;
