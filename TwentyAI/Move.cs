@@ -233,15 +233,14 @@ namespace TwentyAI
 
         private void moveBlock(int option)
         {
-            if(true)
-            //while (true)
+            int depth = 1;
+            while (depth <= maxDepth)
             {
                 DateTime time_start = DateTime.Now;
                 getCurrent();
                 currentOutput();
                 List<List<Point>> finalAction = new List<List<Point>>();
-
-                int depth = 100;
+                
                 Debug.WriteLine("Depth: " + depth);
 
                 if (option == 0)
@@ -251,7 +250,7 @@ namespace TwentyAI
                 else
                     DepthFirstSearch(ref finalAction, depth);
                 
-                for (int i = 0; i < finalAction.Count; i++)
+                /*for (int i = 0; i < finalAction.Count; i++)
                 {
                     List<Point> route = new List<Point>();
                     getCurrent();
@@ -262,13 +261,15 @@ namespace TwentyAI
                     }
                     else
                         break;
-                }
+                }*/
                 Thread.Sleep(500);
                 DateTime time_end = DateTime.Now;
-                string result2 = ((TimeSpan)(time_end - time_start)).TotalMilliseconds.ToString();
+                testTime[depth - 1] = ((TimeSpan)(time_end - time_start)).TotalMilliseconds;
+                string result2 = testTime[depth - 1].ToString();
                 Debug.WriteLine("Time: " + result2 + "\n");
+                depth++;
             }
+            finishOrNot();
         }
-        
     }
 }

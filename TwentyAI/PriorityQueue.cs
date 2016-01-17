@@ -37,7 +37,7 @@ namespace TwentyAI
                 ci = pi;
             }
         }
-        public T Pop()
+        public T Pop(ref int score)
         {
             /*List<int> allValue = new List<int>();
             for (int i = 0; i < _data.Count; i++)
@@ -58,6 +58,7 @@ namespace TwentyAI
             // assumes pq is not empty; up to calling code
             int li = _data.Count - 1; // last index (before removal)
             T frontItem = _data[0];   // fetch the front
+            score = _dict[frontItem];
             _data[0] = _data[li];
             _data.RemoveAt(li);
 

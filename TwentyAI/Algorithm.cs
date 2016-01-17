@@ -107,16 +107,20 @@ namespace TwentyAI
             List<List<Point>> actionList = new List<List<Point>>();
             Dictionary<Block[,], List<List<Point>>> transitionTable = new Dictionary<Block[,], List<List<Point>>>();
             Block[,] leafNode = new Block[7, 8];
+            int score = 0;
+            int dd = depth;
             while (frontier.Count() != 0 && depth > 0)
             {
                 depth -= 1;
-                leafNode = frontier.Pop();
+                leafNode = frontier.Pop(ref score);
                 if (transitionTable.ContainsKey(leafNode))
                 {
                     actionList = new List<List<Point>>(transitionTable[leafNode]);
                 }
                 if (isGoal(leafNode))
                 {
+                    testScore[dd - 1] = score;
+                    Debug.WriteLine("Score: " + score);
                     finalActionList = actionList;
                     return;
                 }
@@ -142,6 +146,8 @@ namespace TwentyAI
                     leaves.Remove(leaf);
                 }
             }
+            testScore[dd - 1] = score;
+            Debug.WriteLine("Score: " + score);
             finalActionList = actionList;
             return;
         }

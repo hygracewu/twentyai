@@ -19,3 +19,4 @@ D:\Dropbox\NTU\AI\twentyai\TwentyAI\obj\Debug\TwentyAI.csproj.GenerateResource.C
 C:\Users\USER\Documents\AI Final\twentyai\TwentyAI\bin\Debug\TwentyAI.exe.config
 C:\Users\USER\Documents\AI Final\twentyai\TwentyAI\obj\Debug\TwentyAI.exe
 C:\Users\USER\Documents\AI Final\twentyai\TwentyAI\obj\Debug\TwentyAI.pdb
+C:\Users\USER\documents\visual studio 2015\Projects\TwentyAI\TwentyAI\obj\Debug\TwentyAI.csproj.ResolveComReference.cache
