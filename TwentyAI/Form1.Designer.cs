@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.ooo = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.searchMethod = new System.Windows.Forms.Label();
@@ -87,6 +88,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ooo);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "TwentySolver";
             this.TopMost = true;

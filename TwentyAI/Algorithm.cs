@@ -305,7 +305,7 @@ namespace TwentyAI
                         //+ pairNum * 100
                         + jammedNum * 700
                         + bottomNum * 30
-                        + topNum[6] * 200
+                        + topNum[6] * 50
                         + topNum[7] * 5000
                         + blockNum * 1000
                         + bottomSum * 1
@@ -314,7 +314,7 @@ namespace TwentyAI
                         );
             for (int i = 0; i < 6; ++i)
             {
-                score += i * 10 * topNum[i];
+                score += i * 5 * topNum[i];
             }
 
             /*Debug.WriteLine("###" + score);

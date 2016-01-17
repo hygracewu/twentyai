@@ -233,17 +233,23 @@ namespace TwentyAI
 
         private void moveBlock(int option)
         {
-            while (true)
+            if(true)
+            //while (true)
             {
+                DateTime time_start = DateTime.Now;
                 getCurrent();
                 currentOutput();
                 List<List<Point>> finalAction = new List<List<Point>>();
+
+                int depth = 100;
+                Debug.WriteLine("Depth: " + depth);
+
                 if (option == 0)
-                    AStarSearch(ref finalAction, 100);
+                    AStarSearch(ref finalAction, depth);
                 else if (option == 1)
-                    BreadthFirstSearch(ref finalAction, 100);
+                    BreadthFirstSearch(ref finalAction, depth);
                 else
-                    DepthFirstSearch(ref finalAction, 100);
+                    DepthFirstSearch(ref finalAction, depth);
                 
                 for (int i = 0; i < finalAction.Count; i++)
                 {
@@ -258,6 +264,9 @@ namespace TwentyAI
                         break;
                 }
                 Thread.Sleep(500);
+                DateTime time_end = DateTime.Now;
+                string result2 = ((TimeSpan)(time_end - time_start)).TotalMilliseconds.ToString();
+                Debug.WriteLine("Time: " + result2 + "\n");
             }
         }
         
