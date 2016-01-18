@@ -63,6 +63,19 @@ namespace TwentyAI
             }
         }
         private delegate void finish();
+        private void updateCurrentDepth(int depth)
+        {
+            if (this.InvokeRequired)
+            {
+                uCD ucd = new uCD(updateCurrentDepth);
+                this.Invoke(ucd, depth);
+            }
+            else
+            {
+                currentDepth.Text = depth.ToString();
+            }
+        }
+        private delegate void uCD(int depth);
 
         private int[] testScore = new int[maxDepth];
         private double[] testTime = new double[maxDepth];

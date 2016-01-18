@@ -236,6 +236,8 @@ namespace TwentyAI
             int depth = 1;
             while (depth <= maxDepth)
             {
+                if (depth%10 == 0)
+                    updateCurrentDepth(depth);
                 DateTime time_start = DateTime.Now;
                 getCurrent();
                 currentOutput();
