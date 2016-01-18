@@ -20,3 +20,13 @@ C:\Users\USER\Documents\AI Final\twentyai\TwentyAI\bin\Debug\TwentyAI.exe.config
 C:\Users\USER\Documents\AI Final\twentyai\TwentyAI\obj\Debug\TwentyAI.exe
 C:\Users\USER\Documents\AI Final\twentyai\TwentyAI\obj\Debug\TwentyAI.pdb
 C:\Users\USER\documents\visual studio 2015\Projects\TwentyAI\TwentyAI\obj\Debug\TwentyAI.csproj.ResolveComReference.cache
+D:\VS2015\twentyai\TwentyAI\bin\Debug\TwentyAI.exe.config
+D:\VS2015\twentyai\TwentyAI\obj\Debug\TwentyAI.csproj.ResolveComReference.cache
+D:\VS2015\twentyai\TwentyAI\obj\Debug\TwentyAI.exe
+D:\VS2015\twentyai\TwentyAI\obj\Debug\TwentyAI.pdb
+D:\VS2015\twentyai\TwentyAI\bin\Debug\TwentyAI.exe
+D:\VS2015\twentyai\TwentyAI\bin\Debug\TwentyAI.pdb
+D:\VS2015\twentyai\TwentyAI\obj\Debug\TwentyAI.csprojResolveAssemblyReference.cache
+D:\VS2015\twentyai\TwentyAI\obj\Debug\TwentyAI.Form1.resources
+D:\VS2015\twentyai\TwentyAI\obj\Debug\TwentyAI.Properties.Resources.resources
+D:\VS2015\twentyai\TwentyAI\obj\Debug\TwentyAI.csproj.GenerateResource.Cache

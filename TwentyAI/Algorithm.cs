@@ -120,6 +120,7 @@ namespace TwentyAI
                 if (isGoal(leafNode))
                 {
                     testScore[dd - 1] = score;
+                    if (depth > 1) testScore[dd - 1] = 0;
                     Debug.WriteLine("Score: " + score);
                     finalActionList = actionList;
                     return;
@@ -138,7 +139,7 @@ namespace TwentyAI
                     List<List<Point>> leafActionList = new List<List<Point>>(actionList);
                     leafActionList.Add(leafAction);
                     int leafCost = evaluationFunction(leaf) + heuristic(leafAction);
-                    if (explored.Contains(leaf) == false && frontier.Contains(leaf) == false)
+                    if (explored.Contains(leaf) == false && frontier.Contains(leaf) == false && actionList.Contains(leafAction) == false)
                     {
                         frontier.Push(leaf, leafCost);
                         transitionTable.Add(leaf, leafActionList);
