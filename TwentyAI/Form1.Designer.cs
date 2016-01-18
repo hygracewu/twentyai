@@ -34,6 +34,7 @@
             this.searchMethod = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.finishLabel = new System.Windows.Forms.Label();
+            this.currentDepth = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // ooo
@@ -88,11 +89,21 @@
             this.finishLabel.TabIndex = 12;
             this.finishLabel.Text = "Not Finished";
             // 
+            // currentDepth
+            // 
+            this.currentDepth.AutoSize = true;
+            this.currentDepth.Location = new System.Drawing.Point(245, 38);
+            this.currentDepth.Name = "currentDepth";
+            this.currentDepth.Size = new System.Drawing.Size(16, 18);
+            this.currentDepth.TabIndex = 13;
+            this.currentDepth.Text = "0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(350, 516);
+            this.Controls.Add(this.currentDepth);
             this.Controls.Add(this.finishLabel);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.searchMethod);
@@ -115,6 +126,7 @@
         private System.Windows.Forms.Label searchMethod;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label finishLabel;
+        private System.Windows.Forms.Label currentDepth;
     }
 }
 
